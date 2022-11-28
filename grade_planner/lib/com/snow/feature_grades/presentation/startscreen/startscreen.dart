@@ -1,0 +1,390 @@
+import 'package:countup/countup.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+
+import '../../../../../main.dart';
+import '../../../common/components/widget_two_button_dialog.dart';
+import '../../../di/injecting.dart';
+import '../../domain/model/grade.dart';
+import '../../domain/model/subject.dart';
+import '../../domain/model/userpreferences.dart';
+import '../../domain/usecase/__preferences_usecases.dart';
+import '../../domain/usecase/__subject_usecases.dart';
+import '../addGrade/screem_add_grade.dart';
+import '../addSubject/screen_add_subject.dart';
+import '../addYear/screen_add_year.dart';
+import '../settings/screen_settings.dart' as screen;
+import '../viewAllSubjects/screen_viewAllSubjects.dart';
+import 'components/dialog_choose_year.dart';
+import 'components/widget_row_grade.dart';
+import 'components/widget_row_subject.dart';
+
+class StartScreen extends StatefulWidget {
+  const StartScreen({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<StartScreen> createState() => _StartScreenState();
+}
+
+class _StartScreenState extends State<StartScreen> {
+  late PreferencesUsecases preferencesUsecases;
+  late SubjectUsecases subUseCases;
+
+  late Future<Iterable<Subject>> subjects;
+  late Future<Iterable<Grade>> grades;
+
+  late Future<double> average;
+
+  /*
+  State values
+   */
+
+  late Future<UserPreferences> userPrefs;
+  Subject? deletedSubject;
+  Grade? deletedGrade;
+  bool useSubjects = true;
+
+  void _clickAddGrade() async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddGradeScreen(title: "Add Grade")));
+    _reloadData();
+  }
+
+  void _clickAddSubject() async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddFileScreen(title: "Add Subject")));
+    _reloadData();
+  }
+
+  void _clickAddYear() async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddYearScreen(title: "Add Year")));
+    _reloadData();
+  }
+
+  void _clickViewAll() async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenViewAllSubjects(title: "View all subjects")));
+    _reloadData();
+  }
+
+  _reloadData() {
+    setState(() {
+      subjects = subUseCases.getRecentSubjects.call();
+      grades = subUseCases.getRecentGrades.call();
+      userPrefs = preferencesUsecases.getPreferences.call();
+      average = subUseCases.getMeanAverage.call();
+    });
+  }
+
+  _clickDeleteSubject(Subject subject) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TwoButtonDialog(
+          title: "Confirm Deletion",
+          text: "Do you really want to delete the Subject '${subject.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          onNegative: () {
+            Navigator.of(context).pop();
+          },
+          onPositive: () {
+            deletedSubject = subject;
+            subUseCases.deleteSubject.call(subject).then((value) {
+              _reloadData();
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  _clickDeleteGrade(Grade grade) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return TwoButtonDialog(
+          title: "Confirm Deletion",
+          text: "Do you really want to delete the Grade '${grade.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          onNegative: () {
+            Navigator.of(context).pop();
+          },
+          onPositive: () {
+            deletedGrade = grade;
+            subUseCases.deleteGrade.call(grade).then((value) {
+              _reloadData();
+            });
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  void _clickChangeYear(TapUpDetails details) async {
+    log.i("Clicked change year");
+    var years = (await subUseCases.getYears.call());
+    log.i("Got years: $years");
+    var names = years.map((e) => e.name);
+    var pref = (await userPrefs);
+    var name = pref.currentYear;
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ChooseYearDialog(
+          yearNames: names.toList(),
+          defaultName: name,
+          onChange: (String? selected) {
+            if (selected != null) {
+              preferencesUsecases.updatePreferences.call(pref.copyWith(currentYear: selected));
+              Navigator.of(context).pop();
+              _reloadData();
+            }
+          },
+          onAddClick: () {
+            Navigator.of(context).pop();
+            _clickAddYear();
+          },
+        );
+      },
+    );
+  }
+
+  void _onClickSettings() async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const screen.SettingsScreen(title: "Add Year")));
+    _reloadData();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    preferencesUsecases = provider.get<PreferencesUsecases>();
+    subUseCases = provider.get<SubjectUsecases>();
+
+    subjects = subUseCases.getRecentSubjects.call();
+    grades = subUseCases.getRecentGrades.call();
+    userPrefs = preferencesUsecases.getPreferences.call();
+    average = subUseCases.getMeanAverage.call();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: [IconButton(onPressed: _onClickSettings, icon: const Icon(Icons.settings))],
+        ),
+        floatingActionButton: SpeedDial(
+          childMargin: const EdgeInsets.all(16),
+          animatedIcon: AnimatedIcons.menu_home,
+          children: [
+            SpeedDialChild(
+              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+              label: "Add Grade",
+              child: Icon(
+                Icons.numbers,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
+              ),
+              onTap: _clickAddGrade,
+            ),
+            SpeedDialChild(
+              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+              label: "Add Subject",
+              child: Icon(
+                Icons.create_new_folder,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
+              ),
+              onTap: _clickAddSubject,
+            ),
+            SpeedDialChild(
+              backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
+              label: "Add Year",
+              child: Icon(
+                Icons.calendar_month,
+                color: Theme.of(context).colorScheme.onTertiaryContainer,
+              ),
+              onTap: _clickAddYear,
+            ),
+          ],
+        ),
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 4, 16, 16),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTapUp: _clickChangeYear,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("Current year: "),
+                            FutureBuilder<UserPreferences>(
+                              future: userPrefs,
+                              builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
+                                if (value.hasData) {
+                                  if (value.data!.currentYear == "") {
+                                    return const Text("[No year selected]");
+                                  }
+                                  return Text(value.data!.currentYear);
+                                } else {
+                                  return const Text("[No year selected]");
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                        const Text(
+                          "Select year",
+                          style: TextStyle(decoration: TextDecoration.underline),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Text(
+                    "Total average grade:",
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  FutureBuilder<double>(
+                    future: average,
+                    builder: (BuildContext context, AsyncSnapshot<double> shot) {
+                      if (shot.hasData) {
+                        return Countup(
+                          begin: 0.0,
+                          end: shot.data!,
+                          precision: 1,
+                          style: Theme.of(context).textTheme.displayLarge,
+                        );
+                      } else {
+                        return const Padding(
+                          padding: EdgeInsets.all(6),
+                          child: Text("[No Data available]"),
+                        );
+                      }
+                    },
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Recently changed:",
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              useSubjects = !useSubjects;
+                            });
+                          },
+                          icon: const Icon(Icons.change_circle_outlined),
+                        ),
+                        const Expanded(
+                          child: SizedBox(
+                            width: 0,
+                            height: 0,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            IconButton(
+                              onPressed: _clickViewAll,
+                              icon: const Icon(Icons.list),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  FutureBuilder<Iterable<Subject>>(
+                    future: subjects,
+                    builder: (BuildContext context, AsyncSnapshot<Iterable<Subject>> shot) {
+                      if (useSubjects) {
+                        if (shot.hasData) {
+                          if (shot.data!.isNotEmpty) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                for (Subject subject in shot.data!)
+                                  SubjectRow(
+                                    subject: subject,
+                                    onDelete: _clickDeleteSubject,
+                                    isOverAverage: subUseCases.isOverAverage.callSubject(subject, Settings.getValue("order_mode", defaultValue: 1)!),
+                                    onClick: (Subject _) {},
+                                  )
+                              ],
+                            );
+                          } else {
+                            return const Text("No recent activity");
+                          }
+                        } else {
+                          return const Padding(
+                            padding: EdgeInsets.all(32),
+                            child: Text(
+                              "[No subject data found. Try adding subjects.]",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }
+                      } else {
+                        return const SizedBox(
+                          height: 0,
+                          width: 0,
+                        );
+                      }
+                    },
+                  ),
+                  FutureBuilder<Iterable<Grade>>(
+                    future: grades,
+                    builder: (BuildContext context, AsyncSnapshot<Iterable<Grade>> shot) {
+                      if (!useSubjects) {
+                        if (shot.hasData) {
+                          if (shot.data!.isNotEmpty) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                for (Grade grade in shot.data!)
+                                  GradeRow(
+                                    grade: grade,
+                                    onDelete: _clickDeleteGrade,
+                                    isOverAverage: subUseCases.isOverAverage.callGrade(grade, Settings.getValue("order_mode", defaultValue: 1)!),
+                                    onClick: (Grade _) {},
+                                  )
+                              ],
+                            );
+                          } else {
+                            return const Text("No recent activity");
+                          }
+                        } else {
+                          return const Padding(
+                            padding: EdgeInsets.all(32),
+                            child: Text(
+                              "[No grade data found. Try adding grades.]",
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }
+                      } else {
+                        return const SizedBox(
+                          height: 0,
+                          width: 0,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
+  }
+}
