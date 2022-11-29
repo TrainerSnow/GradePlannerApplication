@@ -6,11 +6,11 @@ import 'package:grade_planner/com/snow/feature_grades/presentation/startscreen/s
 import 'package:grade_planner/com/snow/ui/theme/color_schemes.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 late Injector provider;
 
 void main()async {
-  var binding = WidgetsFlutterBinding.ensureInitialized();
   ModuleContainer().init(Injector()).then((value) {
     provider = value;
     Settings.init();
@@ -24,24 +24,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var supportedLocales = [
+      const Locale("en", ""),
+      const Locale("de", ""),
+    ];
+    supportedLocales.addAll(AppLocalizations.supportedLocales);
+
     return MaterialApp(
       title: 'Grade Planner',
 
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
+        GlobalCupertinoLocalizations.delegate,
+
       ],
 
-      supportedLocales: const [
-        Locale("en", ""),
-        Locale("de", ""),
-      ],
+      supportedLocales: supportedLocales,
 
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
 
-      home: const StartScreen(title: 'Grade Planner'),
+      home: const StartScreen(title: "Grade Planner"),
     );
   }
 }

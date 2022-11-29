@@ -1,0 +1,10 @@
+{
+  "app_name": "Grade Planner",
+  "@app_name": {
+    "description": "The name of this app."
+  },
+  "add_year_label": "Add Year",
+  "@add_year_label": {
+    "description": "Adding a year."
+  }
+}
