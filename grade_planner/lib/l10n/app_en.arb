@@ -1,10 +1,66 @@
 {
   "app_name": "Grade Planner",
-  "@app_name": {
-    "description": "The name of this app."
-  },
-  "add_year_label": "Add Year",
-  "@add_year_label": {
-    "description": "Adding a year."
-  }
+
+  "add_year": "Add Year",
+  "add_subject": "Add Subject",
+  "add_grade": "Add Grade",
+
+  "year": "Year",
+  "subject": "Subject",
+  "group": "Group",
+  "groups": "Groups",
+  "subject_name" : "Subject name",
+  "group_name" : "Group name",
+  "grade_name": "Grade name",
+  "grade_value": "Grade value",
+  "grade_ordering": "Grade Ordering",
+  "value": "Value",
+  "days_ago": "Days ago",
+  "grades": "Grades",
+  "percentage_part" : "Percentage",
+  "average" : "Average",
+
+  "send": "Send",
+  "add": "Add",
+  "add_photo": "Add photo",
+  "show_more": "Show more",
+  "show_less": "Show less",
+  "n_a": "N/A",
+  "confirm_deletion": "Confirm Deletion",
+
+  "view_all_subjects": "View all subjects",
+  "grades_in_x": "Grades in %s",
+  "images_in_x": "Images in %s",
+  "in_x_x": "In %s, %s",
+
+  "current_year_x": "Current year: %s",
+  "no_year_selected": "[No year selected]",
+  "select_year": "Select year",
+  "total_avg_grade_": "Total average grade:",
+  "no_data_available": "[No data available]",
+  "recently_changed": "Recently changed",
+  "no_subject_data_info": "No subject data found. Try adding some.",
+  "no_images_found": "No images for this grade found.",
+  "add_image_not_supported_info": "Adding images is not supported on your platform. Please use a mobile device.",
+  "order_low_good": "Low Value Good, High Value Bad",
+  "order_low_bad": "Low Value Bad, High Value Good",
+  "deletion_subject_x_info": "Do you really want to delete the Subject '%s'? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+  "deletion_grade_x_info": "Do you really want to delete the Grade '%s'? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+  "no_recent_activity": "No recent activity",
+
+
+  "subject_not_found": "Subject with that name was not found.",
+  "group_not_found": "Group was not found in that subject.",
+  "grade_name_invalid": "The grade name is invalid.",
+  "grade_name_exists": "The grade name already exists in this group",
+  "grade_value_invalid": "The grade value is invalid",
+
+  "subject_name_exists": "Subject name alr exists.",
+  "parts_not_add_up": "The values don't add up to 100.",
+  "names_invalid": "The names are invalid.",
+  "duplicate_names": "Only specify each grade group name once.",
+  "parts_unfilled": "Please fill out all part values",
+
+  "year_name_exists": "Year name already exists.",
+  "year_name_invalid": "Year name is invalid"
 }
