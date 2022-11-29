@@ -5,6 +5,7 @@ import 'package:grade_planner/com/snow/di/injecting.dart';
 import 'package:grade_planner/com/snow/feature_grades/presentation/startscreen/startscreen.dart';
 import 'package:grade_planner/com/snow/ui/theme/color_schemes.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 late Injector provider;
 
@@ -25,6 +26,18 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Grade Planner',
+
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate
+      ],
+
+      supportedLocales: const [
+        Locale("en", ""),
+        Locale("de", ""),
+      ],
+
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
 
