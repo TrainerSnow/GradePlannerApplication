@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 late Injector provider;
 
 void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
   ModuleContainer().init(Injector()).then((value) {
     provider = value;
     Settings.init();
