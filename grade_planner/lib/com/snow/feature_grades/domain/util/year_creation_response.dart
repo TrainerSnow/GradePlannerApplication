@@ -1,10 +1,10 @@
 class YearCreationResponse {
-  String title;
+  final String title;
 
-  YearCreationResponse._(this.title);
+  const YearCreationResponse._(this.title);
 
-  static final YEAR_NAME_EXISTS = YearCreationResponse._("Year name alr exists.");
-  static final YEAR_NAME_INVALID = YearCreationResponse._("Year name is invalid");
+  static const YEAR_NAME_EXISTS = YearCreationResponse._("Year name alr exists.");
+  static const YEAR_NAME_INVALID = YearCreationResponse._("Year name is invalid");
 
   static final OK = YearCreationResponse._("OK");
 
