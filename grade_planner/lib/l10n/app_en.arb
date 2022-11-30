@@ -27,6 +27,7 @@
   "show_less": "Show less",
   "n_a": "N/A",
   "confirm_deletion": "Confirm Deletion",
+  "error": "Error",
 
   "view_all_subjects": "View all subjects",
   "grades_in_x": "Grades in %s",

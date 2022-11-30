@@ -27,6 +27,7 @@
   "show_less": "Weniger",
   "n_a": "N/A",
   "confirm_deletion": "Löschen bestätigen",
+  "error": "Warnung",
 
   "view_all_subjects": "Alle Fächer ansehen",
   "grades_in_x": "Noten in %s",
