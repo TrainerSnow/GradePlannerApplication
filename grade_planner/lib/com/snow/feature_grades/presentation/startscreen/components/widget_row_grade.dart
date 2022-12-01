@@ -21,7 +21,9 @@ class _GradeRowState extends State<GradeRow> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapUp: (TapUpDetails _) { widget.onClick(widget.grade); },
+      onTapUp: (TapUpDetails _) {
+        widget.onClick(widget.grade);
+      },
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(12),

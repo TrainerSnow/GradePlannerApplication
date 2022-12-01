@@ -1,7 +1,7 @@
 import '../model/subject.dart';
 import '../repository/subject_repository.dart';
 
-class GetSubjectByName{
+class GetSubjectByName {
   final SubjectRepository _repository;
 
   const GetSubjectByName(this._repository);

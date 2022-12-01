@@ -2,12 +2,10 @@ import 'dart:convert';
 
 import 'package:grade_planner/com/snow/di/injecting.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/subject_database.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/year.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_repository.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/repository/preferences_repository.dart';
-
+import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_repository.dart';
 
 class SubjectRepositoryImpl extends SubjectRepository {
   SubjectDatabase database;
@@ -37,7 +35,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
   Future<List<Subject>> getAllSubjects() async {
     List<Year> years = await getAllYears();
 
-
     var currentName = (await pref_repo.getPreferences()).currentYear;
     var currentYear = years.firstWhere((element) => element.name == currentName);
 
@@ -53,13 +50,12 @@ class SubjectRepositoryImpl extends SubjectRepository {
     var currentYear = years.firstWhere((element) => element.name == currentYearName);
     years.remove(currentYear);
 
-    for(int i = 0; i < currentYear.subjects.length; i++){
-      if(currentYear.subjects[i].name == subject.name){
+    for (int i = 0; i < currentYear.subjects.length; i++) {
+      if (currentYear.subjects[i].name == subject.name) {
         currentYear.subjects.removeAt(i);
         break;
       }
     }
-
 
     years.add(currentYear);
 
@@ -96,7 +92,7 @@ class SubjectRepositoryImpl extends SubjectRepository {
   }
 
   @override
-  void addYear({required Year year}) async{
+  void addYear({required Year year}) async {
     List<Year> years = await getAllYears();
     years.add(year);
 
@@ -106,7 +102,7 @@ class SubjectRepositoryImpl extends SubjectRepository {
   }
 
   @override
-  Future<List<Year>> getAllYears() async{
+  Future<List<Year>> getAllYears() async {
     String content = await database.getRawGradeData();
     log.i("Got db content: $content");
     final List<dynamic> jsonList = jsonDecode(content);

@@ -88,7 +88,10 @@ class _AddFileScreenState extends State<AddFileScreen> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return ErrorDialog(errorMsg: errorMsg.title, title: AppLocalizations.of(context)!.error,);
+            return ErrorDialog(
+              errorMsg: errorMsg.title,
+              title: AppLocalizations.of(context)!.error,
+            );
           });
     } else {
       var groups = <GradeGroup>[for (int i = 0; i < _groupNames.length; i++) GradeGroup(name: _groupNames[i], part: _groupParts[i] / 100, grades: <Grade>[])];

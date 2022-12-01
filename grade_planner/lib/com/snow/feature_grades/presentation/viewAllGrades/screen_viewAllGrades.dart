@@ -77,9 +77,13 @@ class _ViewAllGradesState extends State<ScreenViewAllGrades> {
     );
   }
 
-
-  void _clickGrade(Grade grade) async{
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllImages(title: sprintf(AppLocalizations.of(context)!.images_in_x, [grade.name]), subject: widget.subject, grade: grade,)));
+  void _clickGrade(Grade grade) async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ScreenViewAllImages(
+              title: sprintf(AppLocalizations.of(context)!.images_in_x, [grade.name]),
+              subject: widget.subject,
+              grade: grade,
+            )));
     _reloadData();
   }
 
@@ -108,8 +112,11 @@ class _ViewAllGradesState extends State<ScreenViewAllGrades> {
                   ],
                 ),
               );
-            }else{
-              return const SizedBox(height: 0, width: 0,);
+            } else {
+              return const SizedBox(
+                height: 0,
+                width: 0,
+              );
             }
           },
         ),

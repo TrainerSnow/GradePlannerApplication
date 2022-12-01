@@ -2,12 +2,12 @@ import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_
 
 import '../model/year.dart';
 
-class AddYear{
+class AddYear {
   SubjectRepository _repository;
 
   AddYear(this._repository);
 
-  void call(Year year){
+  void call(Year year) {
     _repository.addYear(year: year);
   }
 }

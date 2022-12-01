@@ -8,9 +8,7 @@ part of 'subject.dart';
 
 Subject _$SubjectFromJson(Map<String, dynamic> json) => Subject(
       name: json['name'] as String,
-      groups: (json['groups'] as List<dynamic>)
-          .map((e) => GradeGroup.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      groups: (json['groups'] as List<dynamic>).map((e) => GradeGroup.fromJson(e as Map<String, dynamic>)).toList(),
       createdAt: json['createdAt'] as int,
       changedAt: json['changedAt'] as int,
     );

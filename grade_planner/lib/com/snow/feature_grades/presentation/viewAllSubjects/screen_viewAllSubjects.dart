@@ -62,8 +62,12 @@ class _ScreenViewAllSubjectsState extends State<ScreenViewAllSubjects> {
     );
   }
 
-  void _clickSubject(Subject subject) async{
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllGrades(title: AppLocalizations.of(context)!.add_year, subject: subject,)));
+  void _clickSubject(Subject subject) async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ScreenViewAllGrades(
+              title: AppLocalizations.of(context)!.add_year,
+              subject: subject,
+            )));
     _reloadData();
   }
 

@@ -9,7 +9,6 @@ class GradeCreationResponse {
   static const GRADE_NAME_EXISTS = GradeCreationResponse._("The grade name already exists in this group");
   static const GRADE_VALUE_INVALID = GradeCreationResponse._("The grade value is invalid");
 
-
   static final OK = GradeCreationResponse._("OK");
 
   bool isOk() => this == OK;

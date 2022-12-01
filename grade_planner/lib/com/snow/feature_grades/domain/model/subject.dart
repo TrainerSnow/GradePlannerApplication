@@ -1,6 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../di/injecting.dart';
 import 'grade.dart';
 import 'gradegroup.dart';
 
@@ -22,15 +21,15 @@ class Subject {
       actual100Percent += element.part;
     });
 
-    for(GradeGroup group in actualGroups){
+    for (GradeGroup group in actualGroups) {
       double groupSum = 0;
-      for(Grade grade in group.grades){
+      for (Grade grade in group.grades) {
         groupSum += grade.value;
       }
 
       var groupAvg = groupSum / group.grades.length;
 
-      sum += groupAvg * (group.part/actual100Percent);
+      sum += groupAvg * (group.part / actual100Percent);
     }
 
     return sum;
@@ -46,10 +45,10 @@ class Subject {
     return mappedAverages;
   }
 
-  int gradesNum(){
+  int gradesNum() {
     var sum = 0;
 
-    for(GradeGroup group in groups){
+    for (GradeGroup group in groups) {
       sum += group.grades.length;
     }
 

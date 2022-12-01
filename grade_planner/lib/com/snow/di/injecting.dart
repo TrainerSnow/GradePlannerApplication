@@ -44,7 +44,6 @@ final log = Logger();
 
 class ModuleContainer {
   Future<Injector> init(Injector injector) async {
-
     var subjectDatabase = SubjectDatabase(File(await _subjectFile()));
     injector.map<SubjectDatabase>((injector) => subjectDatabase);
 

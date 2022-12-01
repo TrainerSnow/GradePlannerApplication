@@ -14,44 +14,42 @@ class ErrorDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Colors.transparent,
-      child: DialogBase(
-        background: Theme.of(context).colorScheme.errorContainer,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.error_outline,
-                  size: 24,
-                  color: Theme.of(context).colorScheme.tertiary,
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              title,
-              style: Theme.of(context).primaryTextTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onErrorContainer),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Text(
-              errorMsg,
-              style: Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.onErrorContainer),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-
-          ],
-        ),
-      )
-    );
+        backgroundColor: Colors.transparent,
+        child: DialogBase(
+          background: Theme.of(context).colorScheme.errorContainer,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    size: 24,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                title,
+                style: Theme.of(context).primaryTextTheme.headlineSmall!.copyWith(color: Theme.of(context).colorScheme.onErrorContainer),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Text(
+                errorMsg,
+                style: Theme.of(context).primaryTextTheme.bodyMedium!.copyWith(color: Theme.of(context).colorScheme.onErrorContainer),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+            ],
+          ),
+        ));
   }
 }

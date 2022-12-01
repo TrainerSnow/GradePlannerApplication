@@ -4,10 +4,8 @@ import 'package:grade_planner/com/snow/feature_grades/data/source/images_databas
 import 'package:grade_planner/com/snow/feature_grades/domain/repository/images_repository.dart';
 import 'package:image_picker/image_picker.dart';
 
-class ImagesRepositoryImpl extends ImagesRepository{
-
+class ImagesRepositoryImpl extends ImagesRepository {
   ImagesDatabase database;
-
 
   ImagesRepositoryImpl(this.database);
 
@@ -25,5 +23,4 @@ class ImagesRepositoryImpl extends ImagesRepository{
   List<File> getImageFiles() {
     return database.getImages();
   }
-
 }

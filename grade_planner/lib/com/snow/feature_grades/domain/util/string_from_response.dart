@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/util/subject_creation_responses.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/util/year_creation_response.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'grade_creation_response.dart';
 
-class StringFromResponse{
-  static String get(BuildContext context, Object response){
+class StringFromResponse {
+  static String get(BuildContext context, Object response) {
     var local = AppLocalizations.of(context)!;
 
     switch (response) {

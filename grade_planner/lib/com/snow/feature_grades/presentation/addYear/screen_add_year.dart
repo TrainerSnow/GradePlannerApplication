@@ -32,18 +32,21 @@ class _AddYearScreenState extends State<AddYearScreen> {
     _controller = TextEditingController();
   }
 
-  _clickAddYear() async{
+  _clickAddYear() async {
     var year = Year(name: _yearName, subjects: List.empty());
     var result = await widget.useCases.checkYearInput.call(year);
 
-    if(!result.isOk()){
+    if (!result.isOk()) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorDialog(errorMsg: result.title, title: AppLocalizations.of(context)!.error,);
+          return ErrorDialog(
+            errorMsg: result.title,
+            title: AppLocalizations.of(context)!.error,
+          );
         },
       );
-    }else{
+    } else {
       widget.useCases.addYear.call(year);
       Navigator.of(context).pop();
     }

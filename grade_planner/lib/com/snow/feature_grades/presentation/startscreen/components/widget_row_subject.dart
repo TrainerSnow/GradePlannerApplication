@@ -33,109 +33,111 @@ class _SubjectRowState extends State<SubjectRow> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapUp: (TapUpDetails _) { widget.onClick(widget.subject); },
+      onTapUp: (TapUpDetails _) {
+        widget.onClick(widget.subject);
+      },
       child: Card(
           child: Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              widget.subject.name,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  widget.subject.name,
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Column(
                   children: [
-                    Column(
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.average,
-                          style: Theme.of(context).textTheme.bodyMedium,
-                        ),
-                        FutureBuilder<bool>(
-                          future: widget.isOverAverage,
-                          builder: (BuildContext context, AsyncSnapshot<bool> shot) {
-                            if (shot.hasData) {
-                              return Text(
-                                widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
-                                style: Theme.of(context).textTheme.titleLarge!.copyWith(color: shot.data! ? Colors.green : Colors.red),
-                              );
-                            } else {
-                              return Text(
-                                widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
-                                style: Theme.of(context).textTheme.titleLarge,
-                              );
-                            }
-                          },
-                        ),
-                      ],
+                    Text(
+                      AppLocalizations.of(context)!.average,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
-                    Column(children: [
-                      Text(
-                        AppLocalizations.of(context)!.grades,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        widget.subject.gradesNum().toString(),
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ]),
-                    Column(children: [
-                      Text(
-                        AppLocalizations.of(context)!.groups,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        widget.subject.groups.length.toString(),
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                    ]),
+                    FutureBuilder<bool>(
+                      future: widget.isOverAverage,
+                      builder: (BuildContext context, AsyncSnapshot<bool> shot) {
+                        if (shot.hasData) {
+                          return Text(
+                            widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
+                            style: Theme.of(context).textTheme.titleLarge!.copyWith(color: shot.data! ? Colors.green : Colors.red),
+                          );
+                        } else {
+                          return Text(
+                            widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
+                            style: Theme.of(context).textTheme.titleLarge,
+                          );
+                        }
+                      },
+                    ),
                   ],
                 ),
-                if (expanded)
-                  Column(
-                    children: [
-                      ListView(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        children: [
-                          for (MapEntry<GradeGroup, double> group in widget.subject.averageByGroup().entries)
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "-${group.key.name}: ",
-                                  style: Theme.of(context).textTheme.titleMedium,
-                                ),
-                                Text(
-                                  group.value.toString(),
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
-                              ],
-                            )
-                        ],
-                      ),
-                    ],
+                Column(children: [
+                  Text(
+                    AppLocalizations.of(context)!.grades,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
-                GestureDetector(
-                  onTapUp: _toggleExpanded,
-                  child: Text(expanded ? AppLocalizations.of(context)!.show_less : AppLocalizations.of(context)!.show_more),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                        onPressed: () {
-                          widget.onDelete(widget.subject);
-                        },
-                        icon: const Icon(Icons.delete))
-                  ],
-                )
+                  Text(
+                    widget.subject.gradesNum().toString(),
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ]),
+                Column(children: [
+                  Text(
+                    AppLocalizations.of(context)!.groups,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  Text(
+                    widget.subject.groups.length.toString(),
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ]),
               ],
             ),
-          )),
+            if (expanded)
+              Column(
+                children: [
+                  ListView(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    children: [
+                      for (MapEntry<GradeGroup, double> group in widget.subject.averageByGroup().entries)
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "-${group.key.name}: ",
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              group.value.toString(),
+                              style: Theme.of(context).textTheme.bodyLarge,
+                            ),
+                          ],
+                        )
+                    ],
+                  ),
+                ],
+              ),
+            GestureDetector(
+              onTapUp: _toggleExpanded,
+              child: Text(expanded ? AppLocalizations.of(context)!.show_less : AppLocalizations.of(context)!.show_more),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      widget.onDelete(widget.subject);
+                    },
+                    icon: const Icon(Icons.delete))
+              ],
+            )
+          ],
+        ),
+      )),
     );
   }
 }

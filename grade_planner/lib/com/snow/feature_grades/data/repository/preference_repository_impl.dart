@@ -4,15 +4,13 @@ import 'package:grade_planner/com/snow/feature_grades/data/source/preferences_da
 import 'package:grade_planner/com/snow/feature_grades/domain/model/userpreferences.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/repository/preferences_repository.dart';
 
-import '../../../di/injecting.dart';
-
 class PreferencesRepositoryImpl extends PreferencesRepository {
   PreferencesDatabase database;
 
   PreferencesRepositoryImpl(this.database);
 
   @override
-  Future<UserPreferences> getPreferences() async{
+  Future<UserPreferences> getPreferences() async {
     var content = await database.getRawGradeData();
 
     dynamic json = jsonDecode(content);

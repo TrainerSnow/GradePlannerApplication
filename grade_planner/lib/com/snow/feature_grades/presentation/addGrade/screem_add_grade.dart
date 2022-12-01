@@ -91,10 +91,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorDialog(
-              errorMsg: AppLocalizations.of(context)!.add_image_not_supported_info,
-              title: AppLocalizations.of(context)!.error
-          );
+          return ErrorDialog(errorMsg: AppLocalizations.of(context)!.add_image_not_supported_info, title: AppLocalizations.of(context)!.error);
         },
       );
     } else {
@@ -120,7 +117,10 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorDialog(errorMsg: respond.title, title: AppLocalizations.of(context)!.error,);
+          return ErrorDialog(
+            errorMsg: respond.title,
+            title: AppLocalizations.of(context)!.error,
+          );
         },
       );
     } else {

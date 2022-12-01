@@ -2,13 +2,13 @@ import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_repository.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_subject.dart';
 
-class UpdateGrade{
+class UpdateGrade {
   SubjectRepository repository;
   UpdateSubject updateSubject;
 
   UpdateGrade(this.repository, this.updateSubject);
 
-  Future<void> call(Grade grade) async{
+  Future<void> call(Grade grade) async {
     var subjects = await repository.getAllSubjects();
 
     var subject = subjects.firstWhere((element) => element.name == grade.subjectName);

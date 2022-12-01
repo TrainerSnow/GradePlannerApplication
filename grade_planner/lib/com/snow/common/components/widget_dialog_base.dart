@@ -18,10 +18,7 @@ class DialogBase extends StatelessWidget {
       elevation: 6,
       borderRadius: const BorderRadius.all(Radius.circular(28)),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(28)),
-          color: background
-        ),
+        decoration: BoxDecoration(borderRadius: const BorderRadius.all(Radius.circular(28)), color: background),
         constraints: BoxConstraints(
           maxHeight: MediaQuery.of(context).size.height * 0.7,
         ),
@@ -29,9 +26,7 @@ class DialogBase extends StatelessWidget {
           padding: const EdgeInsets.all(24),
           child: Wrap(
             alignment: WrapAlignment.start,
-            children: [
-              child
-            ],
+            children: [child],
           ),
         ),
       ),
