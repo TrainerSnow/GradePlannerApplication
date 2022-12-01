@@ -21,7 +21,7 @@ class ChooseYearDialog extends StatelessWidget {
           children: [
             //TODO translate
             Text(
-              "Select a year",
+              AppLocalizations.of(context)!.select_year,
               style: Theme.of(context).textTheme.headlineSmall,
               textAlign: TextAlign.start,
             ),

@@ -94,8 +94,8 @@ class _StartScreenState extends State<StartScreen> {
             AppLocalizations.of(context)!.deletion_subject_x_info,
             [subject.name],
           ),
-          positiveLable: "Confirm",
-          negativeLable: "Cancel",
+          positiveLable: AppLocalizations.of(context)!.confirm,
+          negativeLable: AppLocalizations.of(context)!.cancel,
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -121,8 +121,8 @@ class _StartScreenState extends State<StartScreen> {
             AppLocalizations.of(context)!.deletion_grade_x_info,
             [grade.name],
           ),
-          positiveLable: "Confirm",
-          negativeLable: "Cancel",
+          positiveLable: AppLocalizations.of(context)!.confirm,
+          negativeLable: AppLocalizations.of(context)!.cancel,
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -384,10 +384,10 @@ class _StartScreenState extends State<StartScreen> {
                             return Text(AppLocalizations.of(context)!.no_recent_activity);
                           }
                         } else {
-                          return const Padding(
-                            padding: EdgeInsets.all(32),
+                          return Padding(
+                            padding: const EdgeInsets.all(32),
                             child: Text(
-                              "[No grade data found. Try adding grades.]",
+                              AppLocalizations.of(context)!.no_grade_data_found,
                               textAlign: TextAlign.center,
                             ),
                           );
