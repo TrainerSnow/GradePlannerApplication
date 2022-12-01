@@ -2,11 +2,13 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__images_usecases.dart';
 import 'package:grade_planner/main.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../../domain/usecase/__subject_usecases.dart';
 
@@ -56,7 +58,7 @@ class _ScreenViewAllImagesState extends State<ScreenViewAllImages> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Images in ${widget.grade.name}",
+          sprintf(AppLocalizations.of(context)!.images_in_x, [widget.grade.name]),
         ),
         actions: [
           IconButton(
@@ -72,9 +74,9 @@ class _ScreenViewAllImagesState extends State<ScreenViewAllImages> {
               builder: (BuildContext context, AsyncSnapshot<List<File>> shot) {
                 if (shot.hasData) {
                   if (shot.data!.isEmpty) {
-                    return const Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Text("No Images for this grade found"),
+                    return Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(AppLocalizations.of(context)!.no_images_found),
                     );
                   } else {
                     return ImageSlideshow(

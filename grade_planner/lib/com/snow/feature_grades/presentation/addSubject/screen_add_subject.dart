@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/common/components/widget_error.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
@@ -87,7 +88,7 @@ class _AddFileScreenState extends State<AddFileScreen> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return ErrorDialog(errorMsg: errorMsg.title);
+            return ErrorDialog(errorMsg: errorMsg.title, title: AppLocalizations.of(context)!.error,);
           });
     } else {
       var groups = <GradeGroup>[for (int i = 0; i < _groupNames.length; i++) GradeGroup(name: _groupNames[i], part: _groupParts[i] / 100, grades: <Grade>[])];
@@ -140,7 +141,7 @@ class _AddFileScreenState extends State<AddFileScreen> {
                   onChanged: (String name) {
                     _changeSubjectName(name);
                   },
-                  decoration: const InputDecoration(label: Text("Subject name")),
+                  decoration: InputDecoration(label: Text(AppLocalizations.of(context)!.subject_name)),
                 ),
                 Row(
                   children: [IconButton(onPressed: _clickAddGroupRow, icon: const Icon(Icons.add)), IconButton(onPressed: _clickDeleteGroupRow, icon: const Icon(Icons.delete))],

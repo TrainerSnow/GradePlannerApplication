@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class GradeGroupInputSection extends StatelessWidget {
 
@@ -15,8 +16,8 @@ class GradeGroupInputSection extends StatelessWidget {
         Flexible(
           flex: 3,
           child: TextField(
-            decoration: const InputDecoration(
-                label: Text("Group name")
+            decoration: InputDecoration(
+                label: Text(AppLocalizations.of(context)!.group_name)
             ),
             onChanged: onNameChange,
           ),
@@ -25,8 +26,8 @@ class GradeGroupInputSection extends StatelessWidget {
         Flexible(
           flex: 1,
           child: TextField(
-            decoration: const InputDecoration(
-                label: Text("Part")
+            decoration: InputDecoration(
+                label: Text(AppLocalizations.of(context)!.percentage_part)
             ),
             onChanged: onPartChange,
             keyboardType: TextInputType.number,

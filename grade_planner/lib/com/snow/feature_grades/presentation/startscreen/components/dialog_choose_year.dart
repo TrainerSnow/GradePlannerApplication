@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ChooseYearDialog extends StatelessWidget {
   final List<String> yearNames;
@@ -42,9 +43,9 @@ class ChooseYearDialog extends StatelessWidget {
                   onTapUp: (TapUpDetails _) {
                     onAddClick();
                   },
-                  child: const ListTile(
-                    leading: Icon(Icons.add),
-                    title: Text("Add new year"),
+                  child: ListTile(
+                    leading: const Icon(Icons.add),
+                    title: Text(AppLocalizations.of(context)!.add_year),
                   ),
                 )
               ],

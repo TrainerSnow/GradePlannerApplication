@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/common/util/util_time_format.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
-
+import 'package:sprintf/sprintf.dart';
 
 class GradeRow extends StatefulWidget {
   final Grade grade;
@@ -29,7 +30,13 @@ class _GradeRowState extends State<GradeRow> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "In ${widget.grade.subjectName}, ${widget.grade.groupName}",
+                sprintf(
+                  AppLocalizations.of(context)!.in_x_x,
+                  [
+                    widget.grade.subjectName,
+                    widget.grade.groupName,
+                  ],
+                ),
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
@@ -42,7 +49,7 @@ class _GradeRowState extends State<GradeRow> {
                   Column(
                     children: [
                       Text(
-                        "Value",
+                        AppLocalizations.of(context)!.value,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       FutureBuilder<bool>(
@@ -63,7 +70,7 @@ class _GradeRowState extends State<GradeRow> {
                   Column(
                     children: [
                       Text(
-                        "Days ago",
+                        AppLocalizations.of(context)!.days_ago,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(

@@ -1,12 +1,13 @@
 import 'package:countup/countup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../../../../../main.dart';
 import '../../../common/components/widget_two_button_dialog.dart';
-import '../../../di/injecting.dart';
 import '../../domain/model/grade.dart';
 import '../../domain/model/subject.dart';
 import '../../domain/model/userpreferences.dart';
@@ -49,22 +50,22 @@ class _StartScreenState extends State<StartScreen> {
   bool useSubjects = true;
 
   void _clickAddGrade() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddGradeScreen(title: "Add Grade")));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddGradeScreen(title: AppLocalizations.of(context)!.add_grade)));
     _reloadData();
   }
 
   void _clickAddSubject() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddFileScreen(title: "Add Subject")));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddFileScreen(title: AppLocalizations.of(context)!.add_subject)));
     _reloadData();
   }
 
   void _clickAddYear() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddYearScreen(title: "Add Year")));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddYearScreen(title: AppLocalizations.of(context)!.add_year)));
     _reloadData();
   }
 
   void _clickViewAll() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenViewAllSubjects(title: "View all subjects")));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllSubjects(title: AppLocalizations.of(context)!.view_all_subjects)));
     _reloadData();
   }
 
@@ -82,8 +83,13 @@ class _StartScreenState extends State<StartScreen> {
       context: context,
       builder: (BuildContext context) {
         return TwoButtonDialog(
-          title: "Confirm Deletion",
-          text: "Do you really want to delete the Subject '${subject.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          title: AppLocalizations.of(context)!.confirm_deletion,
+          text: sprintf(
+            AppLocalizations.of(context)!.deletion_subject_x_info,
+            [subject.name],
+          ),
+          positiveLable: "Confirm",
+          negativeLable: "Cancel",
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -104,8 +110,13 @@ class _StartScreenState extends State<StartScreen> {
       context: context,
       builder: (BuildContext context) {
         return TwoButtonDialog(
-          title: "Confirm Deletion",
-          text: "Do you really want to delete the Grade '${grade.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          title: AppLocalizations.of(context)!.confirm_deletion,
+          text: sprintf(
+            AppLocalizations.of(context)!.deletion_grade_x_info,
+            [grade.name],
+          ),
+          positiveLable: "Confirm",
+          negativeLable: "Cancel",
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -122,9 +133,7 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   void _clickChangeYear(TapUpDetails details) async {
-    log.i("Clicked change year");
     var years = (await subUseCases.getYears.call());
-    log.i("Got years: $years");
     var names = years.map((e) => e.name);
     var pref = (await userPrefs);
     var name = pref.currentYear;
@@ -151,7 +160,7 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   void _onClickSettings() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => const screen.SettingsScreen(title: "Add Year")));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen.SettingsScreen(title: AppLocalizations.of(context)!.add_year)));
     _reloadData();
   }
 
@@ -180,7 +189,7 @@ class _StartScreenState extends State<StartScreen> {
           children: [
             SpeedDialChild(
               backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              label: "Add Grade",
+              label: AppLocalizations.of(context)!.add_grade,
               child: Icon(
                 Icons.numbers,
                 color: Theme.of(context).colorScheme.onTertiaryContainer,
@@ -189,7 +198,7 @@ class _StartScreenState extends State<StartScreen> {
             ),
             SpeedDialChild(
               backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              label: "Add Subject",
+              label: AppLocalizations.of(context)!.add_subject,
               child: Icon(
                 Icons.create_new_folder,
                 color: Theme.of(context).colorScheme.onTertiaryContainer,
@@ -198,7 +207,7 @@ class _StartScreenState extends State<StartScreen> {
             ),
             SpeedDialChild(
               backgroundColor: Theme.of(context).colorScheme.tertiaryContainer,
-              label: "Add Year",
+              label: AppLocalizations.of(context)!.add_year,
               child: Icon(
                 Icons.calendar_month,
                 color: Theme.of(context).colorScheme.onTertiaryContainer,
@@ -229,25 +238,25 @@ class _StartScreenState extends State<StartScreen> {
                               builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
                                 if (value.hasData) {
                                   if (value.data!.currentYear == "") {
-                                    return const Text("[No year selected]");
+                                    return Text(AppLocalizations.of(context)!.no_year_selected);
                                   }
                                   return Text(value.data!.currentYear);
                                 } else {
-                                  return const Text("[No year selected]");
+                                  return Text(AppLocalizations.of(context)!.no_year_selected);
                                 }
                               },
                             ),
                           ],
                         ),
-                        const Text(
-                          "Select year",
-                          style: TextStyle(decoration: TextDecoration.underline),
+                        Text(
+                          AppLocalizations.of(context)!.select_year,
+                          style: const TextStyle(decoration: TextDecoration.underline),
                         ),
                       ],
                     ),
                   ),
                   Text(
-                    "Total average grade:",
+                    AppLocalizations.of(context)!.total_avg_grade_,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   FutureBuilder<double>(
@@ -261,9 +270,9 @@ class _StartScreenState extends State<StartScreen> {
                           style: Theme.of(context).textTheme.displayLarge,
                         );
                       } else {
-                        return const Padding(
-                          padding: EdgeInsets.all(6),
-                          child: Text("[No Data available]"),
+                        return Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(AppLocalizations.of(context)!.no_data_available),
                         );
                       }
                     },
@@ -274,7 +283,7 @@ class _StartScreenState extends State<StartScreen> {
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Text(
-                          "Recently changed:",
+                          AppLocalizations.of(context)!.recently_changed,
                           textAlign: TextAlign.start,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
@@ -324,13 +333,13 @@ class _StartScreenState extends State<StartScreen> {
                               ],
                             );
                           } else {
-                            return const Text("No recent activity");
+                            return Text(AppLocalizations.of(context)!.no_recent_activity);
                           }
                         } else {
-                          return const Padding(
-                            padding: EdgeInsets.all(32),
+                          return Padding(
+                            padding: const EdgeInsets.all(32),
                             child: Text(
-                              "[No subject data found. Try adding subjects.]",
+                              AppLocalizations.of(context)!.no_subject_data_info,
                               textAlign: TextAlign.center,
                             ),
                           );
@@ -362,7 +371,7 @@ class _StartScreenState extends State<StartScreen> {
                               ],
                             );
                           } else {
-                            return const Text("No recent activity");
+                            return Text(AppLocalizations.of(context)!.no_recent_activity);
                           }
                         } else {
                           return const Padding(

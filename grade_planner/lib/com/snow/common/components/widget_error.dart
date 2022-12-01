@@ -8,7 +8,7 @@ class ErrorDialog extends StatelessWidget {
   const ErrorDialog({
     super.key,
     required this.errorMsg,
-    this.title = "Error",
+    required this.title,
   });
 
   @override

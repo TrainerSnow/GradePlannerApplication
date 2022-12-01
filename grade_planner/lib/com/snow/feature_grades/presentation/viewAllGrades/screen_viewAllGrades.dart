@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
 import 'package:grade_planner/main.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../../../common/components/widget_two_button_dialog.dart';
 import '../../domain/model/grade.dart';
@@ -57,8 +59,10 @@ class _ViewAllGradesState extends State<ScreenViewAllGrades> {
       context: context,
       builder: (BuildContext context) {
         return TwoButtonDialog(
-          title: "Confirm Deletion",
-          text: "Do you really want to delete the Grade '${grade.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          title: AppLocalizations.of(context)!.confirm_deletion,
+          text: sprintf(AppLocalizations.of(context)!.deletion_grade_x_info, [grade.name]),
+          positiveLable: "Confirm",
+          negativeLable: "Cancel",
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -75,7 +79,7 @@ class _ViewAllGradesState extends State<ScreenViewAllGrades> {
 
 
   void _clickGrade(Grade grade) async{
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllImages(title: "Images in ${grade.name}", subject: widget.subject, grade: grade,)));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllImages(title: sprintf(AppLocalizations.of(context)!.images_in_x, [grade.name]), subject: widget.subject, grade: grade,)));
     _reloadData();
   }
 
@@ -83,7 +87,7 @@ class _ViewAllGradesState extends State<ScreenViewAllGrades> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Grades in ${widget.subject.name}"),
+        title: Text(sprintf(AppLocalizations.of(context)!.grades_in_x, [widget.subject.name])),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),

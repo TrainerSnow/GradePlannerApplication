@@ -13,8 +13,8 @@ class TwoButtonDialog extends StatelessWidget {
 
   const TwoButtonDialog({
     super.key,
-    this.positiveLable = "Confirm",
-    this.negativeLable = "Cancel",
+    required this.positiveLable,
+    required this.negativeLable,
     required this.text,
     required this.onPositive,
     required this.onNegative,

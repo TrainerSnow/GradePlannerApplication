@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
 
-import '../../../../di/injecting.dart';
 import '../../../domain/model/subject.dart';
 
 class SubjectRow extends StatefulWidget {
@@ -51,7 +51,7 @@ class _SubjectRowState extends State<SubjectRow> {
                     Column(
                       children: [
                         Text(
-                          "Average",
+                          AppLocalizations.of(context)!.average,
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         FutureBuilder<bool>(
@@ -59,12 +59,12 @@ class _SubjectRowState extends State<SubjectRow> {
                           builder: (BuildContext context, AsyncSnapshot<bool> shot) {
                             if (shot.hasData) {
                               return Text(
-                                widget.subject.average() == double.nan ? "N/A" : widget.subject.average().toStringAsFixed(1),
+                                widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
                                 style: Theme.of(context).textTheme.titleLarge!.copyWith(color: shot.data! ? Colors.green : Colors.red),
                               );
                             } else {
                               return Text(
-                                widget.subject.average() == double.nan ? "N/A" : widget.subject.average().toStringAsFixed(1),
+                                widget.subject.average() == double.nan ? AppLocalizations.of(context)!.n_a : widget.subject.average().toStringAsFixed(1),
                                 style: Theme.of(context).textTheme.titleLarge,
                               );
                             }
@@ -74,7 +74,7 @@ class _SubjectRowState extends State<SubjectRow> {
                     ),
                     Column(children: [
                       Text(
-                        "Grades",
+                        AppLocalizations.of(context)!.grades,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
@@ -84,7 +84,7 @@ class _SubjectRowState extends State<SubjectRow> {
                     ]),
                     Column(children: [
                       Text(
-                        "Groups",
+                        AppLocalizations.of(context)!.groups,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
@@ -121,7 +121,7 @@ class _SubjectRowState extends State<SubjectRow> {
                   ),
                 GestureDetector(
                   onTapUp: _toggleExpanded,
-                  child: Text(expanded ? "Show less" : "Show more"),
+                  child: Text(expanded ? AppLocalizations.of(context)!.show_less : AppLocalizations.of(context)!.show_more),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
