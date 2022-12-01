@@ -34,7 +34,7 @@
   "images_in_x": "Images in %s",
   "in_x_x": "In %s, %s",
 
-  "current_year_x": "Current year: %s",
+  "current_year_": "Current year: ",
   "no_year_selected": "[No year selected]",
   "select_year": "Select year",
   "total_avg_grade_": "Total average grade:",

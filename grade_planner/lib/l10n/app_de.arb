@@ -34,7 +34,7 @@
   "images_in_x": "Bilder in %s",
   "in_x_x": "In %s, %s",
 
-  "current_year_x": "Aktuelle Klasse: %s",
+  "current_year_": "Aktuelle Klasse: ",
   "no_year_selected": "[Keine Klasse ausgewählt]",
   "select_year": "Klasse Auswählen",
   "total_avg_grade_": "Totaler Durchschnitt:",

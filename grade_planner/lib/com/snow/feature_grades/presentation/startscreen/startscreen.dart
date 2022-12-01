@@ -232,7 +232,7 @@ class _StartScreenState extends State<StartScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text("Current year: "),
+                            Text(AppLocalizations.of(context)!.current_year_),
                             FutureBuilder<UserPreferences>(
                               future: userPrefs,
                               builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
