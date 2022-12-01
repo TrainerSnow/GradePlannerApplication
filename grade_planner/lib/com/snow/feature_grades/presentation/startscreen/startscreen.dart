@@ -51,31 +51,37 @@ class _StartScreenState extends State<StartScreen> {
 
   void _clickAddGrade() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddGradeScreen(title: AppLocalizations.of(context)!.add_grade)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickAddSubject() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddFileScreen(title: AppLocalizations.of(context)!.add_subject)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickAddYear() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddYearScreen(title: AppLocalizations.of(context)!.add_year)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickViewAll() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllSubjects(title: AppLocalizations.of(context)!.view_all_subjects)));
-    _reloadData();
+    _onLoad();
   }
 
-  _reloadData() {
+  _onLoad() async {
     setState(() {
       subjects = subUseCases.getRecentSubjects.call();
       grades = subUseCases.getRecentGrades.call();
       userPrefs = preferencesUsecases.getPreferences.call();
       average = subUseCases.getMeanAverage.call();
     });
+    var prefs = await preferencesUsecases.getPreferences.call();
+    var years = await subUseCases.getYears.call();
+
+    if (prefs.currentYear.isEmpty || years.isEmpty) {
+      _showYearDialog(false);
+    }
   }
 
   _clickDeleteSubject(Subject subject) async {
@@ -88,15 +94,15 @@ class _StartScreenState extends State<StartScreen> {
             AppLocalizations.of(context)!.deletion_subject_x_info,
             [subject.name],
           ),
-          positiveLable: "Confirm",
-          negativeLable: "Cancel",
+          positiveLable: AppLocalizations.of(context)!.confirm,
+          negativeLable: AppLocalizations.of(context)!.cancel,
           onNegative: () {
             Navigator.of(context).pop();
           },
           onPositive: () {
             deletedSubject = subject;
             subUseCases.deleteSubject.call(subject).then((value) {
-              _reloadData();
+              _onLoad();
             });
             Navigator.of(context).pop();
           },
@@ -115,15 +121,15 @@ class _StartScreenState extends State<StartScreen> {
             AppLocalizations.of(context)!.deletion_grade_x_info,
             [grade.name],
           ),
-          positiveLable: "Confirm",
-          negativeLable: "Cancel",
+          positiveLable: AppLocalizations.of(context)!.confirm,
+          negativeLable: AppLocalizations.of(context)!.cancel,
           onNegative: () {
             Navigator.of(context).pop();
           },
           onPositive: () {
             deletedGrade = grade;
             subUseCases.deleteGrade.call(grade).then((value) {
-              _reloadData();
+              _onLoad();
             });
             Navigator.of(context).pop();
           },
@@ -132,12 +138,17 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  void _clickChangeYear(TapUpDetails details) async {
+  void _clickChangeYear() async {
+    _showYearDialog(true);
+  }
+
+  void _showYearDialog(bool dismissable) async {
     var years = (await subUseCases.getYears.call());
     var names = years.map((e) => e.name);
     var pref = (await userPrefs);
     var name = pref.currentYear;
     showDialog(
+      barrierDismissible: dismissable,
       context: context,
       builder: (BuildContext context) {
         return ChooseYearDialog(
@@ -147,7 +158,7 @@ class _StartScreenState extends State<StartScreen> {
             if (selected != null) {
               preferencesUsecases.updatePreferences.call(pref.copyWith(currentYear: selected));
               Navigator.of(context).pop();
-              _reloadData();
+              _onLoad();
             }
           },
           onAddClick: () {
@@ -161,7 +172,7 @@ class _StartScreenState extends State<StartScreen> {
 
   void _onClickSettings() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen.SettingsScreen(title: AppLocalizations.of(context)!.add_year)));
-    _reloadData();
+    _onLoad();
   }
 
   @override
@@ -174,6 +185,8 @@ class _StartScreenState extends State<StartScreen> {
     grades = subUseCases.getRecentGrades.call();
     userPrefs = preferencesUsecases.getPreferences.call();
     average = subUseCases.getMeanAverage.call();
+
+    _onLoad();
   }
 
   @override
@@ -224,36 +237,33 @@ class _StartScreenState extends State<StartScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTapUp: _clickChangeYear,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(AppLocalizations.of(context)!.current_year_),
-                            FutureBuilder<UserPreferences>(
-                              future: userPrefs,
-                              builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
-                                if (value.hasData) {
-                                  if (value.data!.currentYear == "") {
-                                    return Text(AppLocalizations.of(context)!.no_year_selected);
-                                  }
-                                  return Text(value.data!.currentYear);
-                                } else {
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(AppLocalizations.of(context)!.current_year_),
+                          FutureBuilder<UserPreferences>(
+                            future: userPrefs,
+                            builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
+                              if (value.hasData) {
+                                if (value.data!.currentYear == "") {
                                   return Text(AppLocalizations.of(context)!.no_year_selected);
                                 }
-                              },
-                            ),
-                          ],
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.select_year,
-                          style: const TextStyle(decoration: TextDecoration.underline),
-                        ),
-                      ],
-                    ),
+                                return Text(value.data!.currentYear);
+                              } else {
+                                return Text(AppLocalizations.of(context)!.no_year_selected);
+                              }
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.change_circle_outlined),
+                            onPressed: _clickChangeYear,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Text(
                     AppLocalizations.of(context)!.total_avg_grade_,
@@ -374,10 +384,10 @@ class _StartScreenState extends State<StartScreen> {
                             return Text(AppLocalizations.of(context)!.no_recent_activity);
                           }
                         } else {
-                          return const Padding(
-                            padding: EdgeInsets.all(32),
+                          return Padding(
+                            padding: const EdgeInsets.all(32),
                             child: Text(
-                              "[No grade data found. Try adding grades.]",
+                              AppLocalizations.of(context)!.no_grade_data_found,
                               textAlign: TextAlign.center,
                             ),
                           );
