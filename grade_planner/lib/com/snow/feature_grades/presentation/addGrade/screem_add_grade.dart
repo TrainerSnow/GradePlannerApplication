@@ -223,8 +223,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
               controller: _gradeValueController,
               onChanged: _changeGradeValue,
               decoration: InputDecoration(label: Text(AppLocalizations.of(context)!.grade_value)),
-              keyboardType: TextInputType.number,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              keyboardType: const TextInputType.numberWithOptions(decimal: true),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
