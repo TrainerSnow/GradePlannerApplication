@@ -45,8 +45,8 @@
   "no_grade_data_found": "Keine Notendaten gefunden. Versuche, Noten hinzuzufügen.",
   "no_images_found": "Keine Bilder für diese Note gefunden.",
   "add_image_not_supported_info": "Bilder hinzuzufügen wird auf diesem Gerät nicht unterstützt. Bitte nutze ein mobiles Gerät.",
-  "order_low_good": "Tiefe Werte Gut, Hohe Werte Schlecht",
-  "order_low_bad": "Hohe Werte Gut, Tiefe Werte Schlecht",
+  "order_low_good": "Tiefe Werte = Gut",
+  "order_low_bad": "Tiefe Werte = Schlecht",
   "deletion_subject_x_info": "Willst du das Fach '%s' wirklich löschen? Achtung: Dies wird alle gruppen und Noten in diesem Fach löschen. Diese Aktion ist nicht widerrufbar.",
   "deletion_grade_x_info": "Willst du wirklich die Note '%s' löschen? Achtung: Dies löscht auch alle Bilder dieser Note. Diese Aktion ist nicht widerrufbar.",
   "no_recent_activity": "Keine kürzlichen Aktivitäten",
@@ -55,7 +55,6 @@
   "grade_name_invalid": "Der Notenname ist nicht zulässig.",
   "grade_name_exists": "Der Notenname existiert bereits in dieser Gruppe.",
   "grade_value_invalid": "Der Notenwert is unzulässig.",
-
   "subject_name_exists": "Der Fachname existiert bereits.",
   "parts_not_add_up": "Die Werte ergeben nicht 100.",
   "names_invalid": "Die Namen sind unzulässig.",

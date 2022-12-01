@@ -45,8 +45,8 @@
   "no_images_found": "No images for this grade found.",
   "no_grade_data_found": "[No grade data found. Try adding grades.]",
   "add_image_not_supported_info": "Adding images is not supported on your platform. Please use a mobile device.",
-  "order_low_good": "Low Value Good, High Value Bad",
-  "order_low_bad": "Low Value Bad, High Value Good",
+  "order_low_good": "Low Values = Good",
+  "order_low_bad": "Low Value = Bad",
   "deletion_subject_x_info": "Do you really want to delete the Subject '%s'? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
   "deletion_grade_x_info": "Do you really want to delete the Grade '%s'? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
   "no_recent_activity": "No recent activity",
@@ -55,7 +55,6 @@
   "grade_name_invalid": "The grade name is invalid.",
   "grade_name_exists": "The grade name already exists in this group",
   "grade_value_invalid": "The grade value is invalid",
-
   "subject_name_exists": "Subject name alr exists.",
   "parts_not_add_up": "The values don't add up to 100.",
   "names_invalid": "The names are invalid.",
