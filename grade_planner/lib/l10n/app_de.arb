@@ -6,6 +6,7 @@
   "add_grade": "Note hinzufügen",
 
   "year": "Klasse",
+  "year_name": "Klassenname",
   "subject": "Fach",
   "group": "Gruppe",
   "groups": "Gruppen",

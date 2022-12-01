@@ -65,8 +65,8 @@ class _AddYearScreenState extends State<AddYearScreen> {
             TextFormField(
               controller: _controller,
               onChanged: _changeYearName,
-              decoration: const InputDecoration(
-                label: Text("Year name"),
+              decoration: InputDecoration(
+                label: Text(AppLocalizations.of(context)!.year_name),
               ),
             )
           ],
