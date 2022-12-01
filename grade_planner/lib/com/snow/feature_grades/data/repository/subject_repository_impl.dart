@@ -36,7 +36,13 @@ class SubjectRepositoryImpl extends SubjectRepository {
     List<Year> years = await getAllYears();
 
     var currentName = (await pref_repo.getPreferences()).currentYear;
-    var currentYear = years.firstWhere((element) => element.name == currentName);
+    var currentYear;
+
+    try {
+      currentYear = years.firstWhere((element) => element.name == currentName);
+    } catch (e) {
+      return <Subject>[];
+    }
 
     return currentYear.subjects;
   }
