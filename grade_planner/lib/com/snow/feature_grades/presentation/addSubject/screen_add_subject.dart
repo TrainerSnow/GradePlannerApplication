@@ -90,7 +90,7 @@ class _AddFileScreenState extends State<AddFileScreen> {
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              errorMsg: StringFromResponse.get(context, errorMsg.title),
+              errorMsg: StringFromResponse.get(context, errorMsg),
               title: AppLocalizations.of(context)!.error,
             );
           });

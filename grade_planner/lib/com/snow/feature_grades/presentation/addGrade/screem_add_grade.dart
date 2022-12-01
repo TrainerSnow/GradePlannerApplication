@@ -119,7 +119,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
         context: context,
         builder: (BuildContext context) {
           return ErrorDialog(
-            errorMsg: StringFromResponse.get(context, respond.title),
+            errorMsg: StringFromResponse.get(context, respond),
             title: AppLocalizations.of(context)!.error,
           );
         },

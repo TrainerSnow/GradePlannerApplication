@@ -42,7 +42,7 @@ class _AddYearScreenState extends State<AddYearScreen> {
         context: context,
         builder: (BuildContext context) {
           return ErrorDialog(
-            errorMsg: StringFromResponse.get(context, result.title),
+            errorMsg: StringFromResponse.get(context, result),
             title: AppLocalizations.of(context)!.error,
           );
         },
