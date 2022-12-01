@@ -51,31 +51,37 @@ class _StartScreenState extends State<StartScreen> {
 
   void _clickAddGrade() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddGradeScreen(title: AppLocalizations.of(context)!.add_grade)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickAddSubject() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddFileScreen(title: AppLocalizations.of(context)!.add_subject)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickAddYear() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => AddYearScreen(title: AppLocalizations.of(context)!.add_year)));
-    _reloadData();
+    _onLoad();
   }
 
   void _clickViewAll() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllSubjects(title: AppLocalizations.of(context)!.view_all_subjects)));
-    _reloadData();
+    _onLoad();
   }
 
-  _reloadData() {
+  _onLoad() async {
     setState(() {
       subjects = subUseCases.getRecentSubjects.call();
       grades = subUseCases.getRecentGrades.call();
       userPrefs = preferencesUsecases.getPreferences.call();
       average = subUseCases.getMeanAverage.call();
     });
+    var prefs = await preferencesUsecases.getPreferences.call();
+    var years = await subUseCases.getYears.call();
+
+    if (prefs.currentYear.isEmpty || years.isEmpty) {
+      _showYearDialog(false);
+    }
   }
 
   _clickDeleteSubject(Subject subject) async {
@@ -96,7 +102,7 @@ class _StartScreenState extends State<StartScreen> {
           onPositive: () {
             deletedSubject = subject;
             subUseCases.deleteSubject.call(subject).then((value) {
-              _reloadData();
+              _onLoad();
             });
             Navigator.of(context).pop();
           },
@@ -123,7 +129,7 @@ class _StartScreenState extends State<StartScreen> {
           onPositive: () {
             deletedGrade = grade;
             subUseCases.deleteGrade.call(grade).then((value) {
-              _reloadData();
+              _onLoad();
             });
             Navigator.of(context).pop();
           },
@@ -133,11 +139,16 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   void _clickChangeYear(TapUpDetails details) async {
+    _showYearDialog(true);
+  }
+
+  void _showYearDialog(bool dismissable) async {
     var years = (await subUseCases.getYears.call());
     var names = years.map((e) => e.name);
     var pref = (await userPrefs);
     var name = pref.currentYear;
     showDialog(
+      barrierDismissible: dismissable,
       context: context,
       builder: (BuildContext context) {
         return ChooseYearDialog(
@@ -147,7 +158,7 @@ class _StartScreenState extends State<StartScreen> {
             if (selected != null) {
               preferencesUsecases.updatePreferences.call(pref.copyWith(currentYear: selected));
               Navigator.of(context).pop();
-              _reloadData();
+              _onLoad();
             }
           },
           onAddClick: () {
@@ -161,7 +172,7 @@ class _StartScreenState extends State<StartScreen> {
 
   void _onClickSettings() async {
     var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen.SettingsScreen(title: AppLocalizations.of(context)!.add_year)));
-    _reloadData();
+    _onLoad();
   }
 
   @override
@@ -174,6 +185,8 @@ class _StartScreenState extends State<StartScreen> {
     grades = subUseCases.getRecentGrades.call();
     userPrefs = preferencesUsecases.getPreferences.call();
     average = subUseCases.getMeanAverage.call();
+
+    _onLoad();
   }
 
   @override
