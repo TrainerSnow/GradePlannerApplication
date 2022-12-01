@@ -1,16 +1,15 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
 import 'package:grade_planner/com/snow/di/injecting.dart';
 import 'package:grade_planner/com/snow/feature_grades/presentation/startscreen/startscreen.dart';
 import 'package:grade_planner/com/snow/ui/theme/color_schemes.dart';
-import 'package:flutter_simple_dependency_injection/injector.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 late Injector provider;
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ModuleContainer().init(Injector()).then((value) {
     provider = value;
@@ -34,17 +33,14 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Grade Planner',
-
+      debugShowCheckedModeBanner: false,
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-
       ],
-
       supportedLocales: supportedLocales,
-
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
 
