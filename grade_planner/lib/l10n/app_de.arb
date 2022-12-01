@@ -37,11 +37,11 @@
 
   "current_year_": "Aktuelle Klasse: ",
   "no_year_selected": "[Keine Klasse ausgewählt]",
-  "select_year": "Klasse Auswählen",
+  "select_year": "Klasse auswählen",
   "total_avg_grade_": "Totaler Durchschnitt:",
   "no_data_available": "[Keine Daten verfügbar]",
   "recently_changed": "Letztens geändert",
-  "no_subject_data_info": "Keine Fächerdaten gefunden. versuche, Fächer hinzuzufügen.",
+  "no_subject_data_info": "Keine Fächerdaten gefunden. Versuche, Fächer hinzuzufügen.",
   "no_images_found": "Keine Bilder für diese Note gefunden.",
   "add_image_not_supported_info": "Bilder hinzuzufügen wird auf diesem Gerät nicht unterstützt. Bitte nutze ein mobiles Gerät.",
   "order_low_good": "Tiefe Werte Gut, Hohe Werte Schlecht",
