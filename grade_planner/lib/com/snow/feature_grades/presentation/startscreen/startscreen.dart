@@ -138,7 +138,7 @@ class _StartScreenState extends State<StartScreen> {
     );
   }
 
-  void _clickChangeYear(TapUpDetails details) async {
+  void _clickChangeYear() async {
     _showYearDialog(true);
   }
 
@@ -237,36 +237,33 @@ class _StartScreenState extends State<StartScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  GestureDetector(
-                    onTapUp: _clickChangeYear,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(AppLocalizations.of(context)!.current_year_),
-                            FutureBuilder<UserPreferences>(
-                              future: userPrefs,
-                              builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
-                                if (value.hasData) {
-                                  if (value.data!.currentYear == "") {
-                                    return Text(AppLocalizations.of(context)!.no_year_selected);
-                                  }
-                                  return Text(value.data!.currentYear);
-                                } else {
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(AppLocalizations.of(context)!.current_year_),
+                          FutureBuilder<UserPreferences>(
+                            future: userPrefs,
+                            builder: (BuildContext context, AsyncSnapshot<UserPreferences> value) {
+                              if (value.hasData) {
+                                if (value.data!.currentYear == "") {
                                   return Text(AppLocalizations.of(context)!.no_year_selected);
                                 }
-                              },
-                            ),
-                          ],
-                        ),
-                        Text(
-                          AppLocalizations.of(context)!.select_year,
-                          style: const TextStyle(decoration: TextDecoration.underline),
-                        ),
-                      ],
-                    ),
+                                return Text(value.data!.currentYear);
+                              } else {
+                                return Text(AppLocalizations.of(context)!.no_year_selected);
+                              }
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.change_circle_outlined),
+                            onPressed: _clickChangeYear,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                   Text(
                     AppLocalizations.of(context)!.total_avg_grade_,
