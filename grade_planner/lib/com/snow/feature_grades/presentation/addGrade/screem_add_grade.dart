@@ -13,6 +13,7 @@ import '../../../../../main.dart';
 import '../../../common/components/widget_error.dart';
 import '../../domain/model/subject.dart';
 import '../../domain/usecase/__subject_usecases.dart';
+import '../../domain/util/string_from_response.dart';
 
 class AddGradeScreen extends StatefulWidget {
   AddGradeScreen({super.key, required this.title});
@@ -118,7 +119,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
         context: context,
         builder: (BuildContext context) {
           return ErrorDialog(
-            errorMsg: respond.title,
+            errorMsg: StringFromResponse.get(context, respond.title),
             title: AppLocalizations.of(context)!.error,
           );
         },

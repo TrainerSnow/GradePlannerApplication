@@ -7,6 +7,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart'
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
 
 import '../../../../../main.dart';
+import '../../domain/util/string_from_response.dart';
 import '../addGrade/components/GradeGroupInputSection.dart';
 
 class AddFileScreen extends StatefulWidget {
@@ -89,7 +90,7 @@ class _AddFileScreenState extends State<AddFileScreen> {
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              errorMsg: errorMsg.title,
+              errorMsg: StringFromResponse.get(context, errorMsg.title),
               title: AppLocalizations.of(context)!.error,
             );
           });
