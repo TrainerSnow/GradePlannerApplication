@@ -1,0 +1,68 @@
+{
+  "app_name": "Notenplaner",
+
+  "add_year": "Klasse hinzufügen",
+  "add_subject": "Fach hinzufügen",
+  "add_grade": "Note hinzufügen",
+
+  "year": "Klasse",
+  "year_name": "Klassenname",
+  "subject": "Fach",
+  "group": "Gruppe",
+  "groups": "Gruppen",
+  "subject_name" : "Fachname",
+  "group_name" : "Gruppenname",
+  "grade_name": "Notenname",
+  "grade_value": "Notenwert",
+  "grade_ordering": "Notensortierung",
+  "value": "Wert",
+  "days_ago": "Vor Tagen",
+  "grades": "Noten",
+  "percentage_part" : "Prozentanteil",
+  "average" : "Durchschnitt",
+
+  "send": "Senden",
+  "add": "Hinzufügen",
+  "add_photo": "Bild hinzufügen",
+  "show_more": "Mehr",
+  "show_less": "Weniger",
+  "n_a": "N/A",
+  "confirm_deletion": "Löschen bestätigen",
+  "error": "Warnung",
+
+  "view_all_subjects": "Alle Fächer ansehen",
+  "grades_in_x": "Noten in %s",
+  "images_in_x": "Bilder in %s",
+  "in_x_x": "In %s, %s",
+
+  "current_year_": "Aktuelle Klasse: ",
+  "no_year_selected": "[Keine Klasse ausgewählt]",
+  "select_year": "Klasse auswählen",
+  "total_avg_grade_": "Totaler Durchschnitt:",
+  "no_data_available": "[Keine Daten verfügbar]",
+  "recently_changed": "Letztens geändert",
+  "no_subject_data_info": "Keine Fächerdaten gefunden. Versuche, Fächer hinzuzufügen.",
+  "no_images_found": "Keine Bilder für diese Note gefunden.",
+  "add_image_not_supported_info": "Bilder hinzuzufügen wird auf diesem Gerät nicht unterstützt. Bitte nutze ein mobiles Gerät.",
+  "order_low_good": "Tiefe Werte Gut, Hohe Werte Schlecht",
+  "order_low_bad": "Hohe Werte Gut, Tiefe Werte Schlecht",
+  "deletion_subject_x_info": "Willst du das Fach '%s' wirklich löschen? Achtung: Dies wird alle gruppen und Noten in diesem Fach löschen. Diese Aktion ist nicht widerrufbar.",
+  "deletion_grade_x_info": "Willst du wirklich die Note '%s' löschen? Achtung: Dies löscht auch alle Bilder dieser Note. Diese Aktion ist nicht widerrufbar.",
+  "no_recent_activity": "Keine kürzlichen Aktivitäten",
+
+
+  "subject_not_found": "Kein Fach wurde mit diesem Name gefunden.",
+  "group_not_found": "Diese Gruppe wurde in dem Fach nicht gefunden.",
+  "grade_name_invalid": "Der Notenname ist nicht zulässig.",
+  "grade_name_exists": "Der Notenname existiert bereits in dieser Gruppe.",
+  "grade_value_invalid": "Der Notenwert is unzulässig.",
+
+  "subject_name_exists": "Der Fachname existiert bereits.",
+  "parts_not_add_up": "Die Werte ergeben nicht 100.",
+  "names_invalid": "Die Namen sind unzulässig.",
+  "duplicate_names": "Gebe jeden Gruppennamen nur einmal an.",
+  "parts_unfilled": "Bitte fülle alle Prozentangaben aus.",
+
+  "year_name_exists": "Klassenname existiert bereits.",
+  "year_name_invalid": "Klassenname ist unzulässig."
+}

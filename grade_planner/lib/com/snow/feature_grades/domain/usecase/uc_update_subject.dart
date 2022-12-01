@@ -2,14 +2,12 @@ import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_
 
 import '../model/subject.dart';
 
-class UpdateSubject{
-
+class UpdateSubject {
   SubjectRepository _repository;
 
   UpdateSubject(this._repository);
 
-  Future<void> call(Subject subject){
+  Future<void> call(Subject subject) {
     return _repository.updateSubject(subject: subject);
   }
-
 }

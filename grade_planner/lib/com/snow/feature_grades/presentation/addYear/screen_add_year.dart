@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/year.dart';
-import 'package:grade_planner/com/snow/feature_grades/presentation/startscreen/startscreen.dart';
 
 import '../../../../../main.dart';
 import '../../../common/components/widget_error.dart';
@@ -32,18 +32,21 @@ class _AddYearScreenState extends State<AddYearScreen> {
     _controller = TextEditingController();
   }
 
-  _clickAddYear() async{
+  _clickAddYear() async {
     var year = Year(name: _yearName, subjects: List.empty());
     var result = await widget.useCases.checkYearInput.call(year);
 
-    if(!result.isOk()){
+    if (!result.isOk()) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorDialog(errorMsg: result.title);
+          return ErrorDialog(
+            errorMsg: result.title,
+            title: AppLocalizations.of(context)!.error,
+          );
         },
       );
-    }else{
+    } else {
       widget.useCases.addYear.call(year);
       Navigator.of(context).pop();
     }
@@ -65,8 +68,8 @@ class _AddYearScreenState extends State<AddYearScreen> {
             TextFormField(
               controller: _controller,
               onChanged: _changeYearName,
-              decoration: const InputDecoration(
-                label: Text("Year"),
+              decoration: InputDecoration(
+                label: Text(AppLocalizations.of(context)!.year_name),
               ),
             )
           ],
@@ -75,7 +78,7 @@ class _AddYearScreenState extends State<AddYearScreen> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _clickAddYear,
         icon: const Icon(Icons.send),
-        label: const Text("Send"),
+        label: Text(AppLocalizations.of(context)!.send),
       ),
     );
   }

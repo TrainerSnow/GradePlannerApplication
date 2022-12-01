@@ -4,8 +4,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_delete_i
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_get_all_images.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_get_images_for_subject.dart';
 
-class ImagesUsecases{
-
+class ImagesUsecases {
   AddImage addImage;
 
   DeleteCache deleteCache;

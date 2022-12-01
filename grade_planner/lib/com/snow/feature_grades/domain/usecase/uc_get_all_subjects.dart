@@ -2,7 +2,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/repository/subject_
 
 import '../model/subject.dart';
 
-class GetAllSubjects implements Function{
+class GetAllSubjects implements Function {
   final SubjectRepository _repository;
 
   const GetAllSubjects(this._repository);

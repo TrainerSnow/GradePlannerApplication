@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/presentation/startscreen/components/widget_row_subject.dart';
 import 'package:grade_planner/main.dart';
+import 'package:sprintf/sprintf.dart';
 
 import '../../../common/components/widget_two_button_dialog.dart';
 import '../../domain/model/subject.dart';
@@ -42,8 +44,10 @@ class _ScreenViewAllSubjectsState extends State<ScreenViewAllSubjects> {
       context: context,
       builder: (BuildContext context) {
         return TwoButtonDialog(
-          title: "Confirm Deletion",
-          text: "Do you really want to delete the Subject '${subject.name}? Note: This will delete all contained Groups and Grades. You cannot restore this. This deletion is permanent.",
+          title: AppLocalizations.of(context)!.confirm_deletion,
+          text: sprintf(AppLocalizations.of(context)!.deletion_subject_x_info, [subject.name]),
+          positiveLable: "Confirm",
+          negativeLable: "Cancel",
           onNegative: () {
             Navigator.of(context).pop();
           },
@@ -58,8 +62,12 @@ class _ScreenViewAllSubjectsState extends State<ScreenViewAllSubjects> {
     );
   }
 
-  void _clickSubject(Subject subject) async{
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewAllGrades(title: "Add Year", subject: subject,)));
+  void _clickSubject(Subject subject) async {
+    var _ = await Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ScreenViewAllGrades(
+              title: AppLocalizations.of(context)!.add_year,
+              subject: subject,
+            )));
     _reloadData();
   }
 

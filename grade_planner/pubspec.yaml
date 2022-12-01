@@ -3,7 +3,7 @@ description: An application to keep track, organize and analyze your school grad
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 0.1.2+3
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -12,6 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
+  intl: ^0.17.0
 
   json_annotation: ^4.7.0
 
@@ -50,6 +54,7 @@ dependencies:
   flutter_image_slideshow: ^0.1.4
 
   flutter_launcher_icons: ^0.11.0
+  sprintf: ^7.0.0
 
 dev_dependencies:
   flutter_test:
@@ -60,6 +65,7 @@ flutter:
 
   uses-material-design: true
 
+  generate: true
 
 flutter_icons:
 

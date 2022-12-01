@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:grade_planner/com/snow/di/injecting.dart';
-
 class SubjectDatabase {
   final File _subjectDataFile;
 

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__images_usecases.dart';
@@ -90,7 +91,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return const ErrorDialog(errorMsg: "Adding images is not supported on your platform. Please use a mobile device.");
+          return ErrorDialog(errorMsg: AppLocalizations.of(context)!.add_image_not_supported_info, title: AppLocalizations.of(context)!.error);
         },
       );
     } else {
@@ -116,7 +117,10 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return ErrorDialog(errorMsg: respond.title);
+          return ErrorDialog(
+            errorMsg: respond.title,
+            title: AppLocalizations.of(context)!.error,
+          );
         },
       );
     } else {
@@ -174,8 +178,8 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
                   controller: textEditingController,
                   focusNode: focusNode,
                   onChanged: _changeSubjectName,
-                  decoration: const InputDecoration(
-                    label: Text("Subject"),
+                  decoration: InputDecoration(
+                    label: Text(AppLocalizations.of(context)!.subject),
                   ),
                 );
               },
@@ -204,8 +208,8 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
                   controller: textEditingController,
                   focusNode: focusNode,
                   onChanged: _changeGroupName,
-                  decoration: const InputDecoration(
-                    label: Text("Group"),
+                  decoration: InputDecoration(
+                    label: Text(AppLocalizations.of(context)!.group),
                   ),
                 );
               },
@@ -213,12 +217,12 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
             TextField(
               controller: _gradeNameController,
               onChanged: _changeGradeName,
-              decoration: const InputDecoration(label: Text("Grade name")),
+              decoration: InputDecoration(label: Text(AppLocalizations.of(context)!.grade_name)),
             ),
             TextField(
               controller: _gradeValueController,
               onChanged: _changeGradeValue,
-              decoration: const InputDecoration(label: Text("Grade value")),
+              decoration: InputDecoration(label: Text(AppLocalizations.of(context)!.grade_value)),
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
@@ -231,7 +235,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
                   icon: const Icon(Icons.add_photo_alternate_outlined),
                 ),
                 Text(
-                  "Add Photo",
+                  AppLocalizations.of(context)!.add_photo,
                   style: Theme.of(context).textTheme.labelLarge,
                 )
               ],
@@ -254,7 +258,7 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: _clickAddGrade,
-        label: const Text("Add"),
+        label: Text(AppLocalizations.of(context)!.add),
         icon: const Icon(Icons.send),
       ),
     );

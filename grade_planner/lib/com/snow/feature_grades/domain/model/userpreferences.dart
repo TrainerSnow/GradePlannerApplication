@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'userpreferences.g.dart';
 
 @JsonSerializable()
-class UserPreferences{
+class UserPreferences {
   String currentYear;
   int orderMode;
 

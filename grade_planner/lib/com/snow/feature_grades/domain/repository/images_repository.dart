@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
 
-abstract class ImagesRepository{
+abstract class ImagesRepository {
   Future<void> addImage(XFile file, String newName);
 
   Future<void> clearCache();

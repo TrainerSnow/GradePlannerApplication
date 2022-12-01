@@ -1,10 +1,7 @@
-import '../model/grade.dart';
 import '../model/subject.dart';
 import '../model/year.dart';
 
-abstract class SubjectRepository{
-
-
+abstract class SubjectRepository {
   Future<List<Subject>> getAllSubjects();
 
   Future<List<Year>> getAllYears();
@@ -16,7 +13,4 @@ abstract class SubjectRepository{
   Future<void> removeSubject({required Subject subject});
 
   Future<void> updateSubject({required Subject subject});
-
-
-
 }

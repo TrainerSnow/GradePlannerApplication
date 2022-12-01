@@ -3,19 +3,19 @@ import 'package:grade_planner/com/snow/feature_grades/domain/util/year_creation_
 
 import '../model/year.dart';
 
-class CheckYearInput{
+class CheckYearInput {
   final SubjectRepository _subjectRepository;
 
   CheckYearInput(this._subjectRepository);
 
-  Future<YearCreationResponse> call(Year year) async{
+  Future<YearCreationResponse> call(Year year) async {
     var years = await _subjectRepository.getAllYears();
 
-    if(years.map((e) => e.name).contains(year.name)){
+    if (years.map((e) => e.name).contains(year.name)) {
       return YearCreationResponse.YEAR_NAME_EXISTS;
     }
 
-    if(year.name.isEmpty){
+    if (year.name.isEmpty) {
       return YearCreationResponse.YEAR_NAME_INVALID;
     }
 

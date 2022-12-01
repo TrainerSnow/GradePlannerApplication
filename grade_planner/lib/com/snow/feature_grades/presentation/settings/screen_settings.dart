@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-
-import '../../../../../main.dart';
-import '../../domain/model/userpreferences.dart';
-import '../../domain/usecase/__preferences_usecases.dart';
 
 class SettingsScreen extends StatefulWidget {
   final String title;
@@ -16,16 +13,14 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
   late int orderMode;
 
-  void _clickChangeOrderingMode(int value) async{
+  void _clickChangeOrderingMode(int value) async {
     Settings.setValue("order_mode", value);
     setState(() {
       orderMode = Settings.getValue("order_mode", defaultValue: 1)!;
     });
   }
-
 
   @override
   void initState() {
@@ -37,20 +32,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title),),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
       body: Column(
         children: [
           SettingsGroup(
-            title: "Grades",
+            title: AppLocalizations.of(context)!.grades,
             children: [
               DropDownSettingsTile(
-                title: "Grade Ordering",
+                title: AppLocalizations.of(context)!.grade_ordering,
                 settingKey: "grade_ordering",
                 selected: orderMode,
-                values: const <int, String>{
-                  1: "Low Value Good, High Value Bad",
-                  2: "Low Value Bad, High Value Good"
-                },
+                values: <int, String>{1: AppLocalizations.of(context)!.order_low_good, 2: AppLocalizations.of(context)!.order_low_bad},
                 onChange: _clickChangeOrderingMode,
               ),
             ],

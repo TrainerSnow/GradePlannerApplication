@@ -8,9 +8,7 @@ part of 'year.dart';
 
 Year _$YearFromJson(Map<String, dynamic> json) => Year(
       name: json['name'] as String,
-      subjects: (json['subjects'] as List<dynamic>)
-          .map((e) => Subject.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      subjects: (json['subjects'] as List<dynamic>).map((e) => Subject.fromJson(e as Map<String, dynamic>)).toList(),
     );
 
 Map<String, dynamic> _$YearToJson(Year instance) => <String, dynamic>{
