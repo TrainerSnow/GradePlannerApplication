@@ -156,7 +156,13 @@ class _AddFileScreenState extends State<AddFileScreen> {
               ],
             ),
           )),
-      floatingActionButton: showFab ? FloatingActionButton(onPressed: _clickAddSubject, child: const Icon(Icons.check)) : null,
+      floatingActionButton: showFab
+          ? FloatingActionButton.extended(
+              onPressed: _clickAddSubject,
+              label: Text(AppLocalizations.of(context)!.add),
+              icon: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }

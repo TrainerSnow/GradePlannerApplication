@@ -155,6 +155,8 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Padding(
@@ -169,12 +171,10 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
                 return subjects.map((e) => e.name).where((element) => element.toLowerCase().contains(value.text.toLowerCase()));
               },
               onSelected: _changeSubjectName,
-              fieldViewBuilder: (
-                BuildContext context,
-                TextEditingController textEditingController,
-                FocusNode focusNode,
-                VoidCallback onFieldSubmitted,
-              ) {
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,) {
                 return TextFormField(
                   controller: textEditingController,
                   focusNode: focusNode,
@@ -199,12 +199,10 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
                 }
               },
               onSelected: _changeGroupName,
-              fieldViewBuilder: (
-                BuildContext context,
-                TextEditingController textEditingController,
-                FocusNode focusNode,
-                VoidCallback onFieldSubmitted,
-              ) {
+              fieldViewBuilder: (BuildContext context,
+                  TextEditingController textEditingController,
+                  FocusNode focusNode,
+                  VoidCallback onFieldSubmitted,) {
                 return TextFormField(
                   controller: textEditingController,
                   focusNode: focusNode,
@@ -256,11 +254,13 @@ class _AddGradeScreenState extends State<AddGradeScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _clickAddGrade,
-        label: Text(AppLocalizations.of(context)!.add),
-        icon: const Icon(Icons.send),
-      ),
+      floatingActionButton: showFab
+          ? FloatingActionButton.extended(
+              onPressed: _clickAddGrade,
+              label: Text(AppLocalizations.of(context)!.add),
+              icon: const Icon(Icons.add),
+            )
+          : null,
     );
   }
 }
