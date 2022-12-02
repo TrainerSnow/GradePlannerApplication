@@ -59,6 +59,8 @@ class _AddYearScreenState extends State<AddYearScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
+
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Padding(
@@ -76,11 +78,13 @@ class _AddYearScreenState extends State<AddYearScreen> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _clickAddYear,
-        icon: const Icon(Icons.send),
-        label: Text(AppLocalizations.of(context)!.send),
-      ),
+      floatingActionButton: showFab
+          ? FloatingActionButton.extended(
+              onPressed: _clickAddYear,
+              icon: const Icon(Icons.add),
+              label: Text(AppLocalizations.of(context)!.add),
+            )
+          : null,
     );
   }
 }
