@@ -171,7 +171,7 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   void _onClickSettings() async {
-    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen.SettingsScreen(title: AppLocalizations.of(context)!.add_year)));
+    var _ = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => screen.SettingsScreen(title: AppLocalizations.of(context)!.settings)));
     _onLoad();
   }
 
