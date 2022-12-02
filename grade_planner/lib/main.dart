@@ -43,8 +43,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: supportedLocales,
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-
-      home: const StartScreen(title: "Grade Planner"),
+      home: const StartScreen(),
     );
   }
 }

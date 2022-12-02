@@ -23,9 +23,7 @@ import 'components/widget_row_grade.dart';
 import 'components/widget_row_subject.dart';
 
 class StartScreen extends StatefulWidget {
-  const StartScreen({super.key, required this.title});
-
-  final String title;
+  const StartScreen({super.key});
 
   @override
   State<StartScreen> createState() => _StartScreenState();
@@ -193,7 +191,7 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(AppLocalizations.of(context)!.app_name),
           actions: [IconButton(onPressed: _onClickSettings, icon: const Icon(Icons.settings))],
         ),
         floatingActionButton: SpeedDial(
