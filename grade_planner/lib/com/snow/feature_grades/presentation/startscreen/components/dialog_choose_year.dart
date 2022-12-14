@@ -19,7 +19,6 @@ class ChooseYearDialog extends StatelessWidget {
         background: Theme.of(context).colorScheme.surface,
         child: Column(
           children: [
-            //TODO translate
             Text(
               AppLocalizations.of(context)!.select_year,
               style: Theme.of(context).textTheme.headlineSmall,
