@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -34,10 +35,10 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
         children: [
           //TODO: Translate
           SettingsGroup(
-            title: "Privacy",
+            title: AppLocalizations.of(context)!.privacy,
             children: [
               SimpleSettingsTile(
-                title: "Privacy Policy",
+                title: AppLocalizations.of(context)!.privacy_policy,
                 subtitle: PRIVACY_POLICY,
                 onTap: () {
                   launchUrl(Uri.parse(PRIVACY_POLICY));
@@ -46,10 +47,10 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
             ],
           ),
           SettingsGroup(
-            title: "Open Source",
+            title: AppLocalizations.of(context)!.open_source,
             children: [
               SimpleSettingsTile(
-                title: "Github Repository",
+                title: AppLocalizations.of(context)!.github_repo,
                 subtitle: GITHUB_REPO,
                 onTap: () {
                   launchUrl(Uri.parse(GITHUB_REPO));
@@ -58,13 +59,13 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
             ],
           ),
           SettingsGroup(
-            title: "About this app",
+            title: AppLocalizations.of(context)!.about_this_app,
             children: [
               FutureBuilder<PackageInfo>(
                   future: packageInfo,
                   builder: (BuildContext context, AsyncSnapshot<PackageInfo> shot) {
                     return SimpleSettingsTile(
-                      title: "App name",
+                      title: AppLocalizations.of(context)!.app_name,
                       subtitle: shot.hasData ? shot.data!.appName : null,
                     );
                   }),
@@ -72,7 +73,7 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
                   future: packageInfo,
                   builder: (BuildContext context, AsyncSnapshot<PackageInfo> shot) {
                     return SimpleSettingsTile(
-                      title: "Package name",
+                      title: AppLocalizations.of(context)!.package_name,
                       subtitle: shot.hasData ? shot.data!.packageName : null,
                     );
                   }),
@@ -80,7 +81,7 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
                   future: packageInfo,
                   builder: (BuildContext context, AsyncSnapshot<PackageInfo> shot) {
                     return SimpleSettingsTile(
-                      title: "Version",
+                      title: AppLocalizations.of(context)!.version,
                       subtitle: shot.hasData ? shot.data!.version : null,
                     );
                   }),
@@ -88,7 +89,7 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
                   future: packageInfo,
                   builder: (BuildContext context, AsyncSnapshot<PackageInfo> shot) {
                     return SimpleSettingsTile(
-                      title: "Build version",
+                      title: AppLocalizations.of(context)!.build_version,
                       subtitle: shot.hasData ? shot.data!.buildNumber : null,
                     );
                   }),

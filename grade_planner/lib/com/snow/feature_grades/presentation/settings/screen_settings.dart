@@ -59,10 +59,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           SettingsGroup(
-            title: "Misc",
+            title: AppLocalizations.of(context)!.misc,
             children: [
               SimpleSettingsTile(
-                title: "About this app",
+                title: AppLocalizations.of(context)!.about_this_app,
                 onTap: _clickOpenAbout,
               ),
             ],
