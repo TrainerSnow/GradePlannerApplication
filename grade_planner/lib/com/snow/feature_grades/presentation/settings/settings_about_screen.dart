@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 const String PRIVACY_POLICY = "https://github.com/TrainerSnow/GradePlannerApplication/blob/master/PRIVACY_POLICY.md";
 const String GITHUB_REPO = "https://github.com/TrainerSnow/GradePlannerApplication";
@@ -25,6 +25,10 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
     packageInfo = PackageInfo.fromPlatform();
   }
 
+  openBrowserTab(String url) async {
+    await FlutterWebBrowser.openWebPage(url: url);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +37,6 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
       ),
       body: Column(
         children: [
-          //TODO: Translate
           SettingsGroup(
             title: AppLocalizations.of(context)!.privacy,
             children: [
@@ -41,7 +44,7 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
                 title: AppLocalizations.of(context)!.privacy_policy,
                 subtitle: PRIVACY_POLICY,
                 onTap: () {
-                  launchUrl(Uri.parse(PRIVACY_POLICY));
+                  openBrowserTab(PRIVACY_POLICY);
                 },
               ),
             ],
@@ -53,7 +56,7 @@ class _SettingsABoutScreenState extends State<SettingsABoutScreen> {
                 title: AppLocalizations.of(context)!.github_repo,
                 subtitle: GITHUB_REPO,
                 onTap: () {
-                  launchUrl(Uri.parse(GITHUB_REPO));
+                  openBrowserTab(GITHUB_REPO);
                 },
               ),
             ],
