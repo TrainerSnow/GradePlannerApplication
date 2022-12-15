@@ -26,6 +26,10 @@ class GradeGroup {
     }
   }
 
+  void normalize() {
+    grades = List.empty();
+  }
+
   GradeGroup({required this.name, required this.part, required this.grades});
 
   factory GradeGroup.fromJson(Map<String, dynamic> json) => _$GradeGroupFromJson(json);
