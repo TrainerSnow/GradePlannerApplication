@@ -8,6 +8,8 @@ abstract class SubjectRepository {
 
   Future<void> addSubject({required Subject subject});
 
+  Future<void> addSubjectWithYear({required Subject subject, required Year year});
+
   Future<void> addYear({required Year year});
 
   Future<void> removeSubject({required Subject subject});

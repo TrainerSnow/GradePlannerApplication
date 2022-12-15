@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:grade_planner/com/snow/di/injecting.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/subject_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/year.dart';
@@ -25,6 +24,30 @@ class SubjectRepositoryImpl extends SubjectRepository {
     currentYear.subjects.add(subject);
 
     years.add(currentYear);
+
+    String jsonList = jsonEncode(years);
+
+    return database.replaceRawData(content: jsonList);
+  }
+
+  @override
+  Future<void> addSubjectWithYear({required Subject subject, required Year year}) async {
+    List<Year> years = await getAllYears();
+
+    for (int i = 0; i < years.length; i++) {
+      if (years[i].name == year.name) {
+        years.removeAt(i);
+      }
+    }
+
+    //years.remove(year);
+
+    //Hack
+    year.subjects = List.of(year.subjects, growable: true);
+
+    year.subjects.add(subject);
+
+    years.add(year);
 
     String jsonList = jsonEncode(years);
 
@@ -110,7 +133,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
   @override
   Future<List<Year>> getAllYears() async {
     String content = await database.getRawGradeData();
-    log.i("Got db content: $content");
     final List<dynamic> jsonList = jsonDecode(content);
 
     List<Year> years = jsonList.map((e) => Year.fromJson(e)).toList();

@@ -12,7 +12,7 @@ class DialogChooseExistingYear extends StatelessWidget {
   //TODO: translate
   @override
   Widget build(BuildContext context) {
-    Year groupValue = years[0];
+    Year? groupValue = years[0];
 
     return Dialog(
       backgroundColor: Colors.transparent,
