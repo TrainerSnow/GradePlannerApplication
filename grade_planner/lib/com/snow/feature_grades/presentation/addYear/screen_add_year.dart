@@ -57,6 +57,7 @@ class _AddYearScreenState extends State<AddYearScreen> {
 
       if (bufferedSubjects.isNotEmpty) {
         for (Subject subject in bufferedSubjects) {
+          subject.normalize();
           await widget.useCases.addSubject.callWithYear(subject, year);
         }
       }
