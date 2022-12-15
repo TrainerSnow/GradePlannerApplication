@@ -27,20 +27,25 @@ class ChooseYearDialog extends StatelessWidget {
             const SizedBox(
               height: 16,
             ),
-            ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              children: [
-                for (String name in yearNames)
-                  ListTile(
-                    title: Text(name),
-                    leading: Radio<String>(
-                      value: name,
-                      groupValue: groupValue,
-                      onChanged: onChange,
-                    ),
-                  )
-              ],
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5,
+              ),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: [
+                  for (String name in yearNames)
+                    ListTile(
+                      title: Text(name),
+                      leading: Radio<String>(
+                        value: name,
+                        groupValue: groupValue,
+                        onChanged: onChange,
+                      ),
+                    )
+                ],
+              ),
             ),
             GestureDetector(
               onTapUp: (TapUpDetails _) {
