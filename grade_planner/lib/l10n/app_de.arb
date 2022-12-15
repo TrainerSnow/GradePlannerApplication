@@ -1,13 +1,12 @@
 {
   "app_name": "Notenplaner",
-
   "add_year": "Klasse hinzufügen",
   "add_subject": "Fach hinzufügen",
   "add_grade": "Note hinzufügen",
-
   "year": "Klasse",
   "year_name": "Klassenname",
   "subject": "Fach",
+  "subjects": "Fächer",
   "group": "Gruppe",
   "groups": "Gruppen",
   "subject_name": "Fachname",
@@ -45,6 +44,7 @@
   "images_in_x": "Bilder in %s",
   "in_x_x": "In %s, %s",
   "current_year_": "Aktuelle Klasse: ",
+  "show_all": "Alles anzeigen",
   "about_this_app": "Über diese App",
   "no_year_selected": "[Keine Klasse ausgewählt]",
   "select_year": "Klasse auswählen",

@@ -1,13 +1,12 @@
 {
   "app_name": "Grade Planner",
-
   "add_year": "Add Year",
   "add_subject": "Add Subject",
   "add_grade": "Add Grade",
-
   "year": "Year",
   "year_name": "Year name",
   "subject": "Subject",
+  "subjects": "Subjects",
   "group": "Group",
   "groups": "Groups",
   "subject_name": "Subject name",
@@ -45,6 +44,7 @@
   "images_in_x": "Images in %s",
   "in_x_x": "In %s, %s",
   "current_year_": "Current year: ",
+  "show_all": "Show all",
   "about_this_app": "About this app",
   "no_year_selected": "[No year selected]",
   "select_year": "Select year",

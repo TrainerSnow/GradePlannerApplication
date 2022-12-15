@@ -285,7 +285,53 @@ class _StartScreenState extends State<StartScreen> {
                       }
                     },
                   ),
-                  Container(
+                  Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.recently_changed,
+                        textAlign: TextAlign.start,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const Expanded(
+                        child: SizedBox(
+                          width: 0,
+                          height: 0,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          TextButton(
+                            onPressed: _clickViewAll,
+                            child: Text(
+                              AppLocalizations.of(context)!.show_all,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            useSubjects ? AppLocalizations.of(context)!.subjects : AppLocalizations.of(context)!.grades,
+                            style: Theme.of(context).textTheme.labelLarge,
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  useSubjects = !useSubjects;
+                                });
+                              },
+                              icon: const Icon(Icons.change_circle_outlined))
+                        ],
+                      )
+                    ],
+                  ),
+                  /*Container(
                     alignment: Alignment.centerLeft,
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -321,7 +367,7 @@ class _StartScreenState extends State<StartScreen> {
                         )
                       ],
                     ),
-                  ),
+                  ),*/
                   FutureBuilder<Iterable<Subject>>(
                     future: subjects,
                     builder: (BuildContext context, AsyncSnapshot<Iterable<Subject>> shot) {
