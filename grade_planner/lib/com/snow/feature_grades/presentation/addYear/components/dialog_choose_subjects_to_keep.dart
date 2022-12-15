@@ -30,7 +30,9 @@ class _DialogChooseSubjectsToKeepState extends State<DialogChooseSubjectsToKeep>
   }
 
   void _onBoxChange(bool state, int which) {
-    states[which] = state;
+    setState(() {
+      states[which] = state;
+    });
   }
 
   @override
