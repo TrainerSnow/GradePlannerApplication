@@ -7,6 +7,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/util/string_from_re
 
 import '../../../../../main.dart';
 import '../../../common/components/widget_error.dart';
+import '../../domain/model/subject.dart';
 import '../../domain/usecase/__subject_usecases.dart';
 import 'components/dialog_choose_existing_year.dart';
 import 'components/dialog_choose_subjects_to_keep.dart';
@@ -24,6 +25,8 @@ class AddYearScreen extends StatefulWidget {
 
 class _AddYearScreenState extends State<AddYearScreen> {
   late TextEditingController _controller;
+
+  List<Subject> bufferedSubjects = List.empty(growable: true);
 
   /*
   State values
@@ -56,6 +59,25 @@ class _AddYearScreenState extends State<AddYearScreen> {
     }
   }
 
+  void _addBufferedSubjects(List<Subject> origList, List<bool> values) {
+    for (int i = 0; i < origList.length; i++) {
+      if (values[i]) {
+        if (!bufferedSubjects.map((e) => e.name).contains(origList[i].name)) {
+          setState(() {
+            bufferedSubjects.add(origList[i]);
+          });
+        }
+      }
+    }
+    log.wtf("Buffered subjects: ${bufferedSubjects.map((e) => e.name)}");
+  }
+
+  void _removeBufferedSubject(int which) {
+    setState(() {
+      bufferedSubjects.removeAt(which);
+    });
+  }
+
   _changeYearName(String value) {
     _yearName = value;
   }
@@ -64,39 +86,43 @@ class _AddYearScreenState extends State<AddYearScreen> {
     var years = (await widget.useCases.getYears());
 
     if (years.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("No Years available to copy the subjects from"),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("No Years available to copy the subjects from"),
+        ),
+      );
     }
 
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return DialogChooseExistingYear(
-            years: years,
-            onYearSelected: (year) {
-              var subjects = year.subjects;
+      context: context,
+      builder: (BuildContext context) {
+        return DialogChooseExistingYear(
+          years: years,
+          onYearSelected: (year) {
+            var subjects = year.subjects;
 
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return DialogChooseSubjectsToKeep(
-                      subjects: subjects,
-                      onApply: (values) {
-                        Navigator.of(context).pop();
-                        //TODO: actually copy the subjects
-                      },
-                      negativeLabel: 'NOPE',
-                      onCancel: () {
-                        log.wtf("Will pop");
-                        Navigator.of(context).pop();
-                      },
-                      posLabel: 'YAY',
-                    );
-                  });
-            },
-          );
-        });
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return DialogChooseSubjectsToKeep(
+                  subjects: subjects,
+                  onApply: (values) {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    _addBufferedSubjects(subjects, values);
+                  },
+                  negativeLabel: 'Cancel',
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                  posLabel: 'Confirm',
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   //TODO: translate
@@ -120,7 +146,22 @@ class _AddYearScreenState extends State<AddYearScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            TextButton(onPressed: _clickCopySubjectsFromYear, child: const Text("Copy Subjects from other year"))
+            OutlinedButton(onPressed: _clickCopySubjectsFromYear, child: const Text("Copy Subjects from other year")),
+            Wrap(
+              children: [
+                for (Subject subject in bufferedSubjects)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 0, 0),
+                    child: ActionChip(
+                      label: Text(subject.name),
+                      avatar: const Icon(Icons.delete),
+                      onPressed: () {
+                        _removeBufferedSubject(bufferedSubjects.indexOf(subject));
+                      },
+                    ),
+                  )
+              ],
+            )
           ],
         ),
       ),
