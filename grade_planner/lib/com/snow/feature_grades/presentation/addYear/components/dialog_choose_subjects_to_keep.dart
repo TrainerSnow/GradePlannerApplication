@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../../common/components/widget_dialog_base.dart';
 import '../../../domain/model/subject.dart';
@@ -44,11 +45,11 @@ class _DialogChooseSubjectsToKeepState extends State<DialogChooseSubjectsToKeep>
         child: Column(
           children: [
             Text(
-              "Select subjects to copy",
+              AppLocalizations.of(context)!.select_subjects_to_copy,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
-            Text("Select the subjects that you want to have in the new created year.", style: Theme.of(context).textTheme.bodyMedium),
+            Text(AppLocalizations.of(context)!.select_subjects_to_copy_info, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 24),
             ListView(
               scrollDirection: Axis.vertical,

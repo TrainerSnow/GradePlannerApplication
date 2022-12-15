@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/common/components/widget_dialog_base.dart';
 
 import '../../../domain/model/year.dart';
@@ -9,7 +10,6 @@ class DialogChooseExistingYear extends StatelessWidget {
 
   const DialogChooseExistingYear({Key? key, required this.years, required this.onYearSelected}) : super(key: key);
 
-  //TODO: translate
   @override
   Widget build(BuildContext context) {
     Year? groupValue = years[0];
@@ -21,11 +21,11 @@ class DialogChooseExistingYear extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              "Select a year",
+              AppLocalizations.of(context)!.select_year,
               style: Theme.of(context).textTheme.headlineSmall,
             ),
             const SizedBox(height: 16),
-            Text("Select a year to copy the subjects from", style: Theme.of(context).textTheme.bodyMedium),
+            Text(AppLocalizations.of(context)!.select_year_to_copy_subject, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 24),
             ListView(
               scrollDirection: Axis.vertical,

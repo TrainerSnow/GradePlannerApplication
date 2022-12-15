@@ -93,8 +93,8 @@ class _AddYearScreenState extends State<AddYearScreen> {
 
     if (years.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("No Years available to copy the subjects from"),
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.no_years_to_copy_subject),
         ),
       );
     }
@@ -117,11 +117,11 @@ class _AddYearScreenState extends State<AddYearScreen> {
                     Navigator.of(context).pop();
                     _addBufferedSubjects(subjects, values);
                   },
-                  negativeLabel: 'Cancel',
+                  negativeLabel: AppLocalizations.of(context)!.cancel,
                   onCancel: () {
                     Navigator.of(context).pop();
                   },
-                  posLabel: 'Confirm',
+                  posLabel: AppLocalizations.of(context)!.confirm,
                 );
               },
             );
@@ -131,7 +131,6 @@ class _AddYearScreenState extends State<AddYearScreen> {
     );
   }
 
-  //TODO: translate
   @override
   Widget build(BuildContext context) {
     final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;

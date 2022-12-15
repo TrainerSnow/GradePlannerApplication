@@ -70,7 +70,10 @@
   "names_invalid": "The names are invalid.",
   "duplicate_names": "Only specify each grade group name once.",
   "parts_unfilled": "Please fill out all part values",
-
   "year_name_exists": "Year name already exists.",
-  "year_name_invalid": "Year name is invalid"
+  "year_name_invalid": "Year name is invalid",
+  "no_years_to_copy_subject": "No Years available to copy the subjects from.",
+  "select_year_to_copy_subject": "Select a year to copy the subjects from.",
+  "select_subjects_to_copy": "Select subjects to copy",
+  "select_subjects_to_copy_info": "Select the subjects that you want to have in the newly created year."
 }
