@@ -331,43 +331,6 @@ class _StartScreenState extends State<StartScreen> {
                       )
                     ],
                   ),
-                  /*Container(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.recently_changed,
-                          textAlign: TextAlign.start,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            setState(() {
-                              useSubjects = !useSubjects;
-                            });
-                          },
-                          icon: const Icon(Icons.change_circle_outlined),
-                        ),
-                        const Expanded(
-                          child: SizedBox(
-                            width: 0,
-                            height: 0,
-                          ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            IconButton(
-                              onPressed: _clickViewAll,
-                              icon: const Icon(Icons.list),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),*/
                   FutureBuilder<Iterable<Subject>>(
                     future: subjects,
                     builder: (BuildContext context, AsyncSnapshot<Iterable<Subject>> shot) {
