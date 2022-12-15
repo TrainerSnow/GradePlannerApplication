@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:grade_planner/com/snow/di/injecting.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/year.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/util/string_from_response.dart';
 
@@ -55,6 +54,13 @@ class _AddYearScreenState extends State<AddYearScreen> {
       );
     } else {
       widget.useCases.addYear.call(year);
+
+      if (bufferedSubjects.isNotEmpty) {
+        for (Subject subject in bufferedSubjects) {
+          await widget.useCases.addSubject.callWithYear(subject, year);
+        }
+      }
+
       Navigator.of(context).pop();
     }
   }
@@ -69,7 +75,6 @@ class _AddYearScreenState extends State<AddYearScreen> {
         }
       }
     }
-    log.wtf("Buffered subjects: ${bufferedSubjects.map((e) => e.name)}");
   }
 
   void _removeBufferedSubject(int which) {
