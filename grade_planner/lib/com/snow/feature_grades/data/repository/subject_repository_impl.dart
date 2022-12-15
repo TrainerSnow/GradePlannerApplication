@@ -98,13 +98,13 @@ class SubjectRepositoryImpl extends SubjectRepository {
   }
 
   @override
-  void addYear({required Year year}) async {
+  Future<void> addYear({required Year year}) async {
     List<Year> years = await getAllYears();
     years.add(year);
 
     String jsonList = jsonEncode(years);
 
-    database.replaceRawData(content: jsonList);
+    return database.replaceRawData(content: jsonList);
   }
 
   @override

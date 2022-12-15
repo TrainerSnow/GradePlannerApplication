@@ -7,7 +7,7 @@ class AddYear {
 
   AddYear(this._repository);
 
-  void call(Year year) {
-    _repository.addYear(year: year);
+  Future<void> call(Year year) {
+    return _repository.addYear(year: year);
   }
 }
