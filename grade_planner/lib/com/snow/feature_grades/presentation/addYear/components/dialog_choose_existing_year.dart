@@ -27,26 +27,31 @@ class DialogChooseExistingYear extends StatelessWidget {
             const SizedBox(height: 16),
             Text(AppLocalizations.of(context)!.select_year_to_copy_subject, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 24),
-            ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              children: [
-                for (Year year in years)
-                  GestureDetector(
-                    child: ListTile(
-                      title: Text(year.name),
-                      leading: Radio<Year>(
-                          value: year,
-                          groupValue: groupValue,
-                          onChanged: (_) {
-                            onYearSelected(year);
-                          }),
-                    ),
-                    onTapUp: (_) {
-                      onYearSelected(year);
-                    },
-                  )
-              ],
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5,
+              ),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: [
+                  for (Year year in years)
+                    GestureDetector(
+                      child: ListTile(
+                        title: Text(year.name),
+                        leading: Radio<Year>(
+                            value: year,
+                            groupValue: groupValue,
+                            onChanged: (_) {
+                              onYearSelected(year);
+                            }),
+                      ),
+                      onTapUp: (_) {
+                        onYearSelected(year);
+                      },
+                    )
+                ],
+              ),
             ),
           ],
         ),
