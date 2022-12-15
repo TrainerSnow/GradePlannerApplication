@@ -51,40 +51,45 @@ class _DialogChooseSubjectsToKeepState extends State<DialogChooseSubjectsToKeep>
             const SizedBox(height: 16),
             Text(AppLocalizations.of(context)!.select_subjects_to_copy_info, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: 24),
-            ListView(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.5,
+              ),
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                children: [
+                  for (int i = 0; i < widget.subjects.length; i++)
+                    ListTile(
+                      title: Text(widget.subjects[i].name),
+                      leading: Checkbox(
+                        value: states[i],
+                        onChanged: (bool? value) {
+                          _onBoxChange(value ?? false, i);
+                        },
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                for (int i = 0; i < widget.subjects.length; i++)
-                  ListTile(
-                    title: Text(widget.subjects[i].name),
-                    leading: Checkbox(
-                      value: states[i],
-                      onChanged: (bool? value) {
-                        _onBoxChange(value ?? false, i);
-                      },
-                    ),
+                TextButton(
+                  onPressed: widget.onCancel,
+                  child: Text(
+                    widget.negativeLabel,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: widget.onCancel,
-                      child: Text(
-                        widget.negativeLabel,
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        widget.onApply(states);
-                      },
-                      child: Text(
-                        widget.posLabel,
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
-                      ),
-                    ),
-                  ],
+                ),
+                TextButton(
+                  onPressed: () {
+                    widget.onApply(states);
+                  },
+                  child: Text(
+                    widget.posLabel,
+                    style: Theme.of(context).textTheme.labelLarge!.copyWith(color: Theme.of(context).colorScheme.primary),
+                  ),
                 ),
               ],
             ),
