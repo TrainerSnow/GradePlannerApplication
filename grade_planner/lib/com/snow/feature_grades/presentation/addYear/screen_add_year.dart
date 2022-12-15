@@ -6,7 +6,10 @@ import 'package:grade_planner/com/snow/feature_grades/domain/util/string_from_re
 
 import '../../../../../main.dart';
 import '../../../common/components/widget_error.dart';
+import '../../domain/model/subject.dart';
 import '../../domain/usecase/__subject_usecases.dart';
+import 'components/dialog_choose_existing_year.dart';
+import 'components/dialog_choose_subjects_to_keep.dart';
 
 class AddYearScreen extends StatefulWidget {
   AddYearScreen({super.key, required this.title});
@@ -21,6 +24,8 @@ class AddYearScreen extends StatefulWidget {
 
 class _AddYearScreenState extends State<AddYearScreen> {
   late TextEditingController _controller;
+
+  List<Subject> bufferedSubjects = List.empty(growable: true);
 
   /*
   State values
@@ -49,12 +54,81 @@ class _AddYearScreenState extends State<AddYearScreen> {
       );
     } else {
       widget.useCases.addYear.call(year);
+
+      if (bufferedSubjects.isNotEmpty) {
+        for (Subject subject in bufferedSubjects) {
+          subject.normalize();
+          await widget.useCases.addSubject.callWithYear(subject, year);
+        }
+      }
+
       Navigator.of(context).pop();
     }
   }
 
+  void _addBufferedSubjects(List<Subject> origList, List<bool> values) {
+    for (int i = 0; i < origList.length; i++) {
+      if (values[i]) {
+        if (!bufferedSubjects.map((e) => e.name).contains(origList[i].name)) {
+          setState(() {
+            bufferedSubjects.add(origList[i]);
+          });
+        }
+      }
+    }
+  }
+
+  void _removeBufferedSubject(int which) {
+    setState(() {
+      bufferedSubjects.removeAt(which);
+    });
+  }
+
   _changeYearName(String value) {
     _yearName = value;
+  }
+
+  _clickCopySubjectsFromYear() async {
+    var years = (await widget.useCases.getYears());
+
+    if (years.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(AppLocalizations.of(context)!.no_years_to_copy_subject),
+        ),
+      );
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DialogChooseExistingYear(
+          years: years,
+          onYearSelected: (year) {
+            var subjects = year.subjects;
+
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return DialogChooseSubjectsToKeep(
+                  subjects: subjects,
+                  onApply: (values) {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    _addBufferedSubjects(subjects, values);
+                  },
+                  negativeLabel: AppLocalizations.of(context)!.cancel,
+                  onCancel: () {
+                    Navigator.of(context).pop();
+                  },
+                  posLabel: AppLocalizations.of(context)!.confirm,
+                );
+              },
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -67,6 +141,7 @@ class _AddYearScreenState extends State<AddYearScreen> {
         padding: const EdgeInsets.all(16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextFormField(
               controller: _controller,
@@ -74,6 +149,23 @@ class _AddYearScreenState extends State<AddYearScreen> {
               decoration: InputDecoration(
                 label: Text(AppLocalizations.of(context)!.year_name),
               ),
+            ),
+            const SizedBox(height: 16),
+            OutlinedButton(onPressed: _clickCopySubjectsFromYear, child: const Text("Copy Subjects from other year")),
+            Wrap(
+              children: [
+                for (Subject subject in bufferedSubjects)
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(8, 4, 0, 0),
+                    child: ActionChip(
+                      label: Text(subject.name),
+                      avatar: const Icon(Icons.delete),
+                      onPressed: () {
+                        _removeBufferedSubject(bufferedSubjects.indexOf(subject));
+                      },
+                    ),
+                  )
+              ],
             )
           ],
         ),

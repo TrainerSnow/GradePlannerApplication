@@ -70,7 +70,10 @@
   "names_invalid": "Die Namen sind unzulässig.",
   "duplicate_names": "Gebe jeden Gruppennamen nur einmal an.",
   "parts_unfilled": "Bitte fülle alle Prozentangaben aus.",
-
   "year_name_exists": "Klassenname existiert bereits.",
-  "year_name_invalid": "Klassenname ist unzulässig."
+  "year_name_invalid": "Klassenname ist unzulässig.",
+  "no_years_to_copy_subject": "Keine Klassen verfügbar um Fächer zu kopieren.",
+  "select_year_to_copy_subject": "Wähle eine Klasse aus, um von diesem Fächer zu kopieren.",
+  "select_subjects_to_copy": "Wähle Fächer aus zum kopieren",
+  "select_subjects_to_copy_info": "Wähle diejenigen Fächer aus, die in der neuen Klasse erscheinen sollen."
 }

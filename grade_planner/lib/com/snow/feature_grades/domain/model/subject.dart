@@ -35,6 +35,15 @@ class Subject {
     return sum;
   }
 
+  void normalize() {
+    createdAt = DateTime.now().millisecondsSinceEpoch;
+    changedAt = DateTime.now().millisecondsSinceEpoch;
+
+    for (GradeGroup group in groups) {
+      group.normalize();
+    }
+  }
+
   Map<GradeGroup, double> averageByGroup() {
     Map<GradeGroup, double> mappedAverages = {};
 

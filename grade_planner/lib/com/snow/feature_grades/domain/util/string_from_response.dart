@@ -3,13 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/util/subject_creation_responses.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/util/year_creation_response.dart';
 
-import '../../../di/injecting.dart';
 import 'grade_creation_response.dart';
 
 class StringFromResponse {
   static String get(BuildContext context, Object response) {
     var local = AppLocalizations.of(context)!;
-    log.wtf("response: $response");
     switch (response) {
       case YearCreationResponse.YEAR_NAME_INVALID:
         return local.year_name_invalid;
