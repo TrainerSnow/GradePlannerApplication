@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/__drive_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/presentation/settings/settings_about_screen.dart';
+import 'package:grade_planner/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -14,7 +17,10 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  late DriveUsecases driveUsecases;
+
   late Future<PackageInfo> packageInfo;
+  late Future<GoogleSignInAccount?> accountInfo;
 
   late int orderMode;
 
@@ -29,16 +35,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
   }
 
-  void _clickUploadGoogleDrive() {}
+  void _clickUploadGoogleDrive() {
+    setState(() {
+      accountInfo = driveUsecases.signoutAndRequestGoogleAccount();
+    });
+  }
 
   @override
   void initState() {
     packageInfo = PackageInfo.fromPlatform();
 
+    driveUsecases = provider.get<DriveUsecases>();
+
     setState(() {
       orderMode = Settings.getValue("order_mode", defaultValue: 1)!;
     });
+
+    _signInSilent();
   }
+
+  void _signInSilent() async {
+    accountInfo = driveUsecases.requestGoogleAccountSilent();
+  }
+
+  /*void _reloadData() async {
+    if ((await driveUsecases.checkGoogleSignedIn())) {
+      accountInfo = driveUsecases.requestGoogleAccount();
+    } else {
+      accountInfo = Future.value(null);
+    }
+
+    setState(() {
+      setState(() {
+        orderMode = Settings.getValue("order_mode", defaultValue: 1)!;
+      });
+    });
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -63,10 +95,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
           SettingsGroup(
             title: AppLocalizations.of(context)!.cloud_storage,
             children: [
-              SimpleSettingsTile(
-                title: AppLocalizations.of(context)!.upload_to_drive,
-                onTap: _clickUploadGoogleDrive,
-              ),
+              FutureBuilder<GoogleSignInAccount?>(
+                future: accountInfo,
+                builder: (context, shot) {
+                  if ((shot.hasData && shot.data == null) || !shot.hasData) {
+                    return SimpleSettingsTile(
+                      title: AppLocalizations.of(context)!.upload_to_drive,
+                      onTap: _clickUploadGoogleDrive,
+                    );
+                  } else {
+                    return SimpleSettingsTile(
+                      title: AppLocalizations.of(context)!.upload_to_drive,
+                      onTap: _clickUploadGoogleDrive,
+                      subtitle: "${shot.data!.displayName} : ${shot.data!.email}",
+                    );
+                  }
+                },
+              )
             ],
           ),
           SettingsGroup(
