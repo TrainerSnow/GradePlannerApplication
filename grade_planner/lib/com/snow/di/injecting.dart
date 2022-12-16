@@ -43,6 +43,7 @@ import '../feature_grades/domain/usecase/uc_get_mean_avg.dart';
 import '../feature_grades/domain/usecase/uc_get_recent_grades.dart';
 import '../feature_grades/domain/usecase/uc_request_google_account.dart';
 import '../feature_grades/domain/usecase/uc_request_google_account_silent.dart';
+import '../feature_grades/domain/usecase/uc_signout_and_request_google_account.dart';
 
 final log = Logger();
 
@@ -136,11 +137,13 @@ class ModuleContainer {
     var requestGoogleAccount = const RequestGoogleAccount();
     var requestGoogleAccountSilent = const RequestGoogleAccountSilent();
     var checkGoogleSignedIn = const CheckGoogleSignedIn();
+    var signoutAndRequestGoogleAccount = const SignoutAndRequestGoogleAccount();
 
     injector.map<DriveUsecases>((injector) => DriveUsecases(
           requestGoogleAccount: requestGoogleAccount,
           checkGoogleSignedIn: checkGoogleSignedIn,
           requestGoogleAccountSilent: requestGoogleAccountSilent,
+          signoutAndRequestGoogleAccount: signoutAndRequestGoogleAccount,
         ));
 
     return Future.value(injector);
