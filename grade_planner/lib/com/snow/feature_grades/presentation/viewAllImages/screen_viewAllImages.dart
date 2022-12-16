@@ -6,11 +6,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__images_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__images_usecases.dart';
 import 'package:grade_planner/main.dart';
 import 'package:sprintf/sprintf.dart';
 
-import '../../domain/usecase/__subject_usecases.dart';
+import '../../domain/usecase/local/__subject_usecases.dart';
 
 class ScreenViewAllImages extends StatefulWidget {
   final String title;

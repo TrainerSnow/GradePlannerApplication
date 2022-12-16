@@ -7,7 +7,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/util/string_from_re
 import '../../../../../main.dart';
 import '../../../common/components/widget_error.dart';
 import '../../domain/model/subject.dart';
-import '../../domain/usecase/__subject_usecases.dart';
+import '../../domain/usecase/local/__subject_usecases.dart';
 import 'components/dialog_choose_existing_year.dart';
 import 'components/dialog_choose_subjects_to_keep.dart';
 

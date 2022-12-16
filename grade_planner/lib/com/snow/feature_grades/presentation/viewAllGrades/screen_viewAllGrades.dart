@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
 import 'package:grade_planner/main.dart';
 import 'package:sprintf/sprintf.dart';
 

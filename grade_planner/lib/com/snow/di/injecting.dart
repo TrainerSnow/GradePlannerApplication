@@ -7,9 +7,9 @@ import 'package:grade_planner/com/snow/feature_grades/data/repository/subject_re
 import 'package:grade_planner/com/snow/feature_grades/data/source/images_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/preferences_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/subject_database.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__images_usecases.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__preferences_usecases.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__images_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__preferences_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_image.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_year.dart';
