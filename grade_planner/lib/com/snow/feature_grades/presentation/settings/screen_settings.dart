@@ -29,6 +29,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
   }
 
+  void _clickUploadGoogleDrive() {}
+
   @override
   void initState() {
     packageInfo = PackageInfo.fromPlatform();
@@ -55,6 +57,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 selected: orderMode,
                 values: <int, String>{1: AppLocalizations.of(context)!.order_low_good, 2: AppLocalizations.of(context)!.order_low_bad},
                 onChange: _clickChangeOrderingMode,
+              ),
+            ],
+          ),
+          SettingsGroup(
+            title: AppLocalizations.of(context)!.cloud_storage,
+            children: [
+              SimpleSettingsTile(
+                title: AppLocalizations.of(context)!.upload_to_drive,
+                onTap: _clickUploadGoogleDrive,
               ),
             ],
           ),

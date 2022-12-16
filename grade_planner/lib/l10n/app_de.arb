@@ -19,6 +19,8 @@
   "grades": "Noten",
   "percentage_part": "Prozentanteil",
   "average": "Durchschnitt",
+  "cloud_storage": "Cloud-Speicher",
+  "upload_to_drive": "Zu Google Drive hochladen",
   "confirm": "Bestätigen",
   "cancel": "Abbrechen",
   "send": "Senden",

@@ -19,6 +19,8 @@
   "grades": "Grades",
   "percentage_part": "Percentage",
   "average": "Average",
+  "cloud_storage": "Cloud storage",
+  "upload_to_drive": "Upload to Google Drive",
   "confirm": "Confirm",
   "cancel": "Cancel",
   "send": "Send",
