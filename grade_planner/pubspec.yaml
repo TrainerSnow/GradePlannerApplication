@@ -59,6 +59,10 @@ dependencies:
 
   flutter_web_browser: ^0.17.1
 
+  googleapis: ^9.2.0
+
+  google_sign_in: ^5.4.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
