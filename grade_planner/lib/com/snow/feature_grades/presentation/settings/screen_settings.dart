@@ -7,6 +7,8 @@ import 'package:grade_planner/com/snow/feature_grades/presentation/settings/sett
 import 'package:grade_planner/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../../../di/injecting.dart';
+
 class SettingsScreen extends StatefulWidget {
   final String title;
 
@@ -35,7 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
   }
 
-  void _clickUploadGoogleDrive() {
+  void _clickSignInGoogle() {
     setState(() {
       accountInfo = driveUsecases.signoutAndRequestGoogleAccount();
     });
@@ -58,19 +60,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
     accountInfo = driveUsecases.requestGoogleAccountSilent();
   }
 
-  /*void _reloadData() async {
-    if ((await driveUsecases.checkGoogleSignedIn())) {
-      accountInfo = driveUsecases.requestGoogleAccount();
-    } else {
-      accountInfo = Future.value(null);
+  void _uploadToGoogleDrive() async {
+    final user = await driveUsecases.requestGoogleAccountSilent();
+    if (user != null) {
+      log.wtf("User: $user");
+      driveUsecases.uploadCurrentToDrive(user);
     }
-
-    setState(() {
-      setState(() {
-        orderMode = Settings.getValue("order_mode", defaultValue: 1)!;
-      });
-    });
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,16 +97,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   if ((shot.hasData && shot.data == null) || !shot.hasData) {
                     return SimpleSettingsTile(
                       title: AppLocalizations.of(context)!.upload_to_drive,
-                      onTap: _clickUploadGoogleDrive,
+                      onTap: _clickSignInGoogle,
                     );
                   } else {
                     return SimpleSettingsTile(
                       title: AppLocalizations.of(context)!.upload_to_drive,
-                      onTap: _clickUploadGoogleDrive,
+                      onTap: _clickSignInGoogle,
                       subtitle: "${shot.data!.displayName} : ${shot.data!.email}",
                     );
                   }
                 },
+              ),
+              //TODO: translate
+              SimpleSettingsTile(
+                title: "Upload current Data to google drive",
+                onTap: _uploadToGoogleDrive,
               )
             ],
           ),
