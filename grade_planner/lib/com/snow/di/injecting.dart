@@ -32,6 +32,7 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_subject_
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_preferences.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_subject.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_upload_current_to_drive.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -49,13 +50,17 @@ final log = Logger();
 
 class ModuleContainer {
   Future<Injector> init(Injector injector) async {
-    var subjectDatabase = SubjectDatabase(File(await _subjectFile()));
+    final subjectFile = File(await _subjectFile());
+    final preferencesFile = File(await _preferencesFile());
+    final imagesDir = Directory(await _imagesDir());
+
+    var subjectDatabase = SubjectDatabase(subjectFile);
     injector.map<SubjectDatabase>((injector) => subjectDatabase);
 
-    var preferencesDatabase = PreferencesDatabase(File(await _preferencesFile()));
+    var preferencesDatabase = PreferencesDatabase(preferencesFile);
     injector.map<PreferencesDatabase>((injector) => preferencesDatabase);
 
-    var imagesDatabase = ImagesDatabase(Directory(await _imagesDir()));
+    var imagesDatabase = ImagesDatabase(imagesDir);
     injector.map<ImagesDatabase>((injector) => imagesDatabase);
 
     var preferences_repo = PreferencesRepositoryImpl(preferencesDatabase);
@@ -138,12 +143,14 @@ class ModuleContainer {
     var requestGoogleAccountSilent = const RequestGoogleAccountSilent();
     var checkGoogleSignedIn = const CheckGoogleSignedIn();
     var signoutAndRequestGoogleAccount = const SignoutAndRequestGoogleAccount();
+    var uploadCurrentToDrive = UploadCurrentToDrive(subjectFile);
 
     injector.map<DriveUsecases>((injector) => DriveUsecases(
           requestGoogleAccount: requestGoogleAccount,
           checkGoogleSignedIn: checkGoogleSignedIn,
           requestGoogleAccountSilent: requestGoogleAccountSilent,
           signoutAndRequestGoogleAccount: signoutAndRequestGoogleAccount,
+          uploadCurrentToDrive: uploadCurrentToDrive,
         ));
 
     return Future.value(injector);
