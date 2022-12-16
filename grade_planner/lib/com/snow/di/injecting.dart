@@ -36,10 +36,12 @@ import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../feature_grades/domain/repository/subject_repository.dart';
+import '../feature_grades/domain/usecase/local/uc_check_google_signed_in.dart';
 import '../feature_grades/domain/usecase/networking/__drive_usecases.dart';
 import '../feature_grades/domain/usecase/uc_delete_image_by_grade.dart';
 import '../feature_grades/domain/usecase/uc_get_mean_avg.dart';
 import '../feature_grades/domain/usecase/uc_get_recent_grades.dart';
+import '../feature_grades/domain/usecase/uc_request_google_account.dart';
 
 final log = Logger();
 
@@ -130,7 +132,10 @@ class ModuleContainer {
       ),
     );
 
-    injector.map<DriveUsecases>((injector) => DriveUsecases());
+    var requestGoogleAccount = RequestGoogleAccount();
+    var checkGoogleSignedIn = CheckGoogleSignedIn();
+
+    injector.map<DriveUsecases>((injector) => DriveUsecases(requestGoogleAccount: requestGoogleAccount, checkGoogleSignedIn: checkGoogleSignedIn));
 
     return Future.value(injector);
   }
