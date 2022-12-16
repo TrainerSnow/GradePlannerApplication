@@ -42,6 +42,7 @@ import '../feature_grades/domain/usecase/uc_delete_image_by_grade.dart';
 import '../feature_grades/domain/usecase/uc_get_mean_avg.dart';
 import '../feature_grades/domain/usecase/uc_get_recent_grades.dart';
 import '../feature_grades/domain/usecase/uc_request_google_account.dart';
+import '../feature_grades/domain/usecase/uc_request_google_account_silent.dart';
 
 final log = Logger();
 
@@ -132,10 +133,15 @@ class ModuleContainer {
       ),
     );
 
-    var requestGoogleAccount = RequestGoogleAccount();
-    var checkGoogleSignedIn = CheckGoogleSignedIn();
+    var requestGoogleAccount = const RequestGoogleAccount();
+    var requestGoogleAccountSilent = const RequestGoogleAccountSilent();
+    var checkGoogleSignedIn = const CheckGoogleSignedIn();
 
-    injector.map<DriveUsecases>((injector) => DriveUsecases(requestGoogleAccount: requestGoogleAccount, checkGoogleSignedIn: checkGoogleSignedIn));
+    injector.map<DriveUsecases>((injector) => DriveUsecases(
+          requestGoogleAccount: requestGoogleAccount,
+          checkGoogleSignedIn: checkGoogleSignedIn,
+          requestGoogleAccountSilent: requestGoogleAccountSilent,
+        ));
 
     return Future.value(injector);
   }
