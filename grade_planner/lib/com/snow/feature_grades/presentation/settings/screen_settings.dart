@@ -62,6 +62,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       accountInfo = driveUsecases.signoutAndRequestGoogleAccount();
       accountInfo.then((value) {
         FLog.info(text: "SIGN IN: Account completed with $value");
+      }).onError((error, stackTrace) {
+        FLog.info(text: "SIGN IN: Account getting did not complete.\nError: $error\nStacktrace:\n${stackTrace.toString()}");
       });
     });
   }
@@ -81,7 +83,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     if (user != null) {
       final result = driveUsecases.uploadCurrentToDrive(account: user);
-      result.then((value) async {}).onError((error, stackTrace) async {});
+      result.then((value) async {
+        FLog.info(text: "Google drive upload was succesful, got result:\n$value");
+      }).onError((error, stackTrace) async {
+        FLog.info(text: "Google drive upload failed.\nError: $error\nStacktrace: ${stackTrace.toString()}");
+      });
     }
   }
 
