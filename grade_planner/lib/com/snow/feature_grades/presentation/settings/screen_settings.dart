@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:f_logs/f_logs.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -158,18 +159,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () async {
                   _uploadToGoogleDriveLogs(await FLog.exportLogs());
                 },
+                enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
                 title: "Clear Logs",
                 onTap: () async {
                   FLog.clearLogs();
                 },
+                enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
                 title: "View logs",
                 onTap: () async {
                   _clickViewLogs();
                 },
+                enabled: !kReleaseMode,
               ),
             ],
           ),
