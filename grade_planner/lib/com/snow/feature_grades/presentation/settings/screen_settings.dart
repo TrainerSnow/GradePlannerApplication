@@ -10,6 +10,8 @@ import 'package:grade_planner/com/snow/feature_grades/presentation/settings/sett
 import 'package:grade_planner/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+import '../viewLogs/screen_view_logs.dart';
+
 class SettingsScreen extends StatefulWidget {
   final String title;
 
@@ -34,8 +36,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
+  //TODO translate
   void _clickOpenAbout() {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
+  }
+
+  //TODO translate
+  void _clickViewLogs() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenViewLogs(title: "View Logs")));
   }
 
   @override
@@ -155,6 +163,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 title: "Clear Logs",
                 onTap: () async {
                   FLog.clearLogs();
+                },
+              ),
+              SimpleSettingsTile(
+                title: "View logs",
+                onTap: () async {
+                  _clickViewLogs();
                 },
               ),
             ],
