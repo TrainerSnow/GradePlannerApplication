@@ -4,7 +4,7 @@ import 'package:grade_planner/com/snow/common/components/widget_error.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/gradegroup.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
 
 import '../../../../../main.dart';
 import '../../domain/util/string_from_response.dart';

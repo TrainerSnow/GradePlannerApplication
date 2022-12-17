@@ -7,9 +7,9 @@ import 'package:grade_planner/com/snow/feature_grades/data/repository/subject_re
 import 'package:grade_planner/com/snow/feature_grades/data/source/images_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/preferences_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/subject_database.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__images_usecases.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__preferences_usecases.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__images_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__preferences_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_image.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_year.dart';
@@ -32,25 +32,35 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_subject_
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_preferences.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_subject.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_upload_current_to_drive.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../feature_grades/domain/repository/subject_repository.dart';
+import '../feature_grades/domain/usecase/local/uc_check_google_signed_in.dart';
+import '../feature_grades/domain/usecase/networking/__drive_usecases.dart';
 import '../feature_grades/domain/usecase/uc_delete_image_by_grade.dart';
 import '../feature_grades/domain/usecase/uc_get_mean_avg.dart';
 import '../feature_grades/domain/usecase/uc_get_recent_grades.dart';
+import '../feature_grades/domain/usecase/uc_request_google_account.dart';
+import '../feature_grades/domain/usecase/uc_request_google_account_silent.dart';
+import '../feature_grades/domain/usecase/uc_signout_and_request_google_account.dart';
 
-final log = Logger();
+late Logger log;
 
 class ModuleContainer {
   Future<Injector> init(Injector injector) async {
-    var subjectDatabase = SubjectDatabase(File(await _subjectFile()));
+    final subjectFile = File(await _subjectFile());
+    final preferencesFile = File(await _preferencesFile());
+    final imagesDir = Directory(await _imagesDir());
+
+    var subjectDatabase = SubjectDatabase(subjectFile);
     injector.map<SubjectDatabase>((injector) => subjectDatabase);
 
-    var preferencesDatabase = PreferencesDatabase(File(await _preferencesFile()));
+    var preferencesDatabase = PreferencesDatabase(preferencesFile);
     injector.map<PreferencesDatabase>((injector) => preferencesDatabase);
 
-    var imagesDatabase = ImagesDatabase(Directory(await _imagesDir()));
+    var imagesDatabase = ImagesDatabase(imagesDir);
     injector.map<ImagesDatabase>((injector) => imagesDatabase);
 
     var preferences_repo = PreferencesRepositoryImpl(preferencesDatabase);
@@ -90,25 +100,25 @@ class ModuleContainer {
     var updateGrade = UpdateGrade(subject_repo, updateSubject);
 
     injector.map<SubjectUsecases>((injector) => SubjectUsecases(
-          getAllSubjects: getAllSubjects,
-          addSubject: addSubject,
-          deleteSubject: deleteSubject,
-          checkSubjectInputs: checkSubjectsInputs,
-          subjectExists: subjectExists,
-          getSubjectByName: getSubjectByName,
-          checkGradeInputs: checkGradeInputs,
-          updateSubject: updateSubject,
-          checkYearInput: checkYearsInput,
-          addYear: addYear,
-          getYears: getYears,
-          getSubjectsByGoodness: getSubjectsByGoodness,
-          getMeanAverage: getMeanAverage,
-          getRecentGrades: getRecentGrades,
-          getRecentSubjects: getRecentSubjects,
-          deleteGrade: deleteGrade,
-          isOverAverage: isOverAverage,
-          updateGrade: updateGrade,
-        ));
+      getAllSubjects: getAllSubjects,
+      addSubject: addSubject,
+      deleteSubject: deleteSubject,
+      checkSubjectInputs: checkSubjectsInputs,
+      subjectExists: subjectExists,
+      getSubjectByName: getSubjectByName,
+      checkGradeInputs: checkGradeInputs,
+      updateSubject: updateSubject,
+      checkYearInput: checkYearsInput,
+      addYear: addYear,
+      getYears: getYears,
+      getSubjectsByGoodness: getSubjectsByGoodness,
+      getMeanAverage: getMeanAverage,
+      getRecentGrades: getRecentGrades,
+      getRecentSubjects: getRecentSubjects,
+      deleteGrade: deleteGrade,
+      isOverAverage: isOverAverage,
+      updateGrade: updateGrade,
+    ));
 
     var updatePreferences = UpdatePreferences(preferences_repo);
 
@@ -120,7 +130,7 @@ class ModuleContainer {
     var deleteImageByGrade = DeleteImageByGrade(getImagesByGrade, getPreferences);
 
     injector.map<ImagesUsecases>(
-      (injector) => ImagesUsecases(
+          (injector) => ImagesUsecases(
         addImage: addImage,
         deleteCache: deleteCache,
         getAllImages: getAllImages,
@@ -128,6 +138,20 @@ class ModuleContainer {
         deleteImageByGrade: deleteImageByGrade,
       ),
     );
+
+    var requestGoogleAccount = const RequestGoogleAccount();
+    var requestGoogleAccountSilent = const RequestGoogleAccountSilent();
+    var checkGoogleSignedIn = const CheckGoogleSignedIn();
+    var signoutAndRequestGoogleAccount = const SignoutAndRequestGoogleAccount();
+    var uploadCurrentToDrive = UploadCurrentToDrive(subjectFile);
+
+    injector.map<DriveUsecases>((injector) => DriveUsecases(
+      requestGoogleAccount: requestGoogleAccount,
+      checkGoogleSignedIn: checkGoogleSignedIn,
+      requestGoogleAccountSilent: requestGoogleAccountSilent,
+      signoutAndRequestGoogleAccount: signoutAndRequestGoogleAccount,
+      uploadCurrentToDrive: uploadCurrentToDrive,
+    ));
 
     return Future.value(injector);
   }
