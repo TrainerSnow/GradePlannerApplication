@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
@@ -6,8 +9,6 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/
 import 'package:grade_planner/com/snow/feature_grades/presentation/settings/settings_about_screen.dart';
 import 'package:grade_planner/main.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-
-import '../../../di/injecting.dart';
 
 class SettingsScreen extends StatefulWidget {
   final String title;
@@ -37,34 +38,51 @@ class _SettingsScreenState extends State<SettingsScreen> {
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
   }
 
-  void _clickSignInGoogle() {
-    setState(() {
-      accountInfo = driveUsecases.signoutAndRequestGoogleAccount();
-    });
-  }
-
   @override
   void initState() {
     packageInfo = PackageInfo.fromPlatform();
 
     driveUsecases = provider.get<DriveUsecases>();
-
     setState(() {
       orderMode = Settings.getValue("order_mode", defaultValue: 1)!;
     });
-
     _signInSilent();
   }
 
+  void _clickSignInGoogle() async {
+    FLog.info(text: "User clicked on sign in with Google");
+    setState(() {
+      accountInfo = driveUsecases.signoutAndRequestGoogleAccount();
+      accountInfo.then((value) {
+        FLog.info(text: "SIGN IN: Account completed with $value");
+      });
+    });
+  }
+
   void _signInSilent() async {
+    FLog.info(text: "Trying to silently sign in to Google");
     accountInfo = driveUsecases.requestGoogleAccountSilent();
+    accountInfo.then((value) {
+      FLog.info(text: "SIGN IN SILENT: Account completed with $value");
+    });
   }
 
   void _uploadToGoogleDrive() async {
+    FLog.info(text: "User clicked on upload data to Google Drive");
     final user = await driveUsecases.requestGoogleAccountSilent();
+    FLog.info(text: "Will use user $user for Google Drive OP");
+
     if (user != null) {
-      log.wtf("User: $user");
-      driveUsecases.uploadCurrentToDrive(user);
+      final result = driveUsecases.uploadCurrentToDrive(account: user);
+      result.then((value) async {}).onError((error, stackTrace) async {});
+    }
+  }
+
+  void _uploadToGoogleDriveLogs(File file) async {
+    final user = await driveUsecases.requestGoogleAccountSilent();
+
+    if (user != null) {
+      driveUsecases.uploadCurrentToDrive(account: user, file: file);
     }
   }
 
@@ -96,12 +114,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context, shot) {
                   if ((shot.hasData && shot.data == null) || !shot.hasData) {
                     return SimpleSettingsTile(
-                      title: AppLocalizations.of(context)!.upload_to_drive,
+                      title: "Mit Google Konto verknüfen",
                       onTap: _clickSignInGoogle,
                     );
                   } else {
                     return SimpleSettingsTile(
-                      title: AppLocalizations.of(context)!.upload_to_drive,
+                      title: "Mit Google Konto verknüfen",
                       onTap: _clickSignInGoogle,
                       subtitle: "${shot.data!.displayName} : ${shot.data!.email}",
                     );
@@ -121,6 +139,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
               SimpleSettingsTile(
                 title: AppLocalizations.of(context)!.about_this_app,
                 onTap: _clickOpenAbout,
+              ),
+            ],
+          ),
+          SettingsGroup(
+            title: "Debug",
+            children: [
+              SimpleSettingsTile(
+                title: "Upload logs to Drive",
+                onTap: () async {
+                  _uploadToGoogleDriveLogs(await FLog.exportLogs());
+                },
+              ),
+              SimpleSettingsTile(
+                title: "Clear Logs",
+                onTap: () async {
+                  FLog.clearLogs();
+                },
               ),
             ],
           ),
