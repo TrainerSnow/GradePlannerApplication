@@ -162,18 +162,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 onTap: () async {
                   _uploadToGoogleDriveLogs(await FLog.exportLogs());
                 },
+                enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
                 title: AppLocalizations.of(context)!.clear_logs,
                 onTap: () async {
                   FLog.clearLogs();
                 },
+                enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
                 title: AppLocalizations.of(context)!.show_logs,
                 onTap: () async {
                   _clickViewLogs();
                 },
+                enabled: !kReleaseMode,
               ),
             ],
           ),
