@@ -37,14 +37,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
     });
   }
 
-  //TODO translate
   void _clickOpenAbout() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SettingsABoutScreen(title: "About")));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SettingsABoutScreen(title: AppLocalizations.of(context)!.about)));
   }
 
-  //TODO translate
   void _clickViewLogs() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ScreenViewLogs(title: "View Logs")));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ScreenViewLogs(title: AppLocalizations.of(context)!.show_logs)));
   }
 
   @override
@@ -123,21 +121,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 builder: (context, shot) {
                   if ((shot.hasData && shot.data == null) || !shot.hasData) {
                     return SimpleSettingsTile(
-                      title: "Mit Google Konto verknüfen",
+                      title: AppLocalizations.of(context)!.connect_google_account,
                       onTap: _clickSignInGoogle,
                     );
                   } else {
                     return SimpleSettingsTile(
-                      title: "Mit Google Konto verknüfen",
+                      title: AppLocalizations.of(context)!.connect_google_account,
                       onTap: _clickSignInGoogle,
                       subtitle: "${shot.data!.displayName} : ${shot.data!.email}",
                     );
                   }
                 },
               ),
-              //TODO: translate
               SimpleSettingsTile(
-                title: "Upload current Data to google drive",
+                title: AppLocalizations.of(context)!.upload_current_to_drive,
                 onTap: _uploadToGoogleDrive,
               )
             ],
@@ -152,24 +149,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ],
           ),
           SettingsGroup(
-            title: "Debug",
+            title: AppLocalizations.of(context)!.debug,
             children: [
               SimpleSettingsTile(
-                title: "Upload logs to Drive",
+                title: AppLocalizations.of(context)!.upload_logs_to_drive,
                 onTap: () async {
                   _uploadToGoogleDriveLogs(await FLog.exportLogs());
                 },
                 enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
-                title: "Clear Logs",
+                title: AppLocalizations.of(context)!.clear_logs,
                 onTap: () async {
                   FLog.clearLogs();
                 },
                 enabled: !kReleaseMode,
               ),
               SimpleSettingsTile(
-                title: "View logs",
+                title: AppLocalizations.of(context)!.show_logs,
                 onTap: () async {
                   _clickViewLogs();
                 },
