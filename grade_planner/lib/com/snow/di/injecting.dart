@@ -36,7 +36,6 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_upload_c
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../common/util/log_output.dart';
 import '../feature_grades/domain/repository/subject_repository.dart';
 import '../feature_grades/domain/usecase/local/uc_check_google_signed_in.dart';
 import '../feature_grades/domain/usecase/networking/__drive_usecases.dart';
@@ -51,10 +50,6 @@ late Logger log;
 
 class ModuleContainer {
   Future<Injector> init(Injector injector) async {
-    final loggerFile = File(await _logFile());
-
-    log = Logger(output: FileOutput(loggerFile));
-
     final subjectFile = File(await _subjectFile());
     final preferencesFile = File(await _preferencesFile());
     final imagesDir = Directory(await _imagesDir());
@@ -165,15 +160,6 @@ class ModuleContainer {
 Future<String> _subjectFile() async {
   var dir = await getApplicationDocumentsDirectory();
   var file = File("${dir.path}/subject_data.json");
-  if (!file.existsSync()) {
-    file.create();
-  }
-  return Future.value(file.path);
-}
-
-Future<String> _logFile() async {
-  var dir = await getApplicationDocumentsDirectory();
-  var file = File("${dir.path}/log.txt");
   if (!file.existsSync()) {
     file.create();
   }

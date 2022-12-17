@@ -1,3 +1,4 @@
+import 'package:f_logs/f_logs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,12 +12,23 @@ late Injector provider;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  LogsConfig config = FLog.getDefaultConfigurations();
+  config.fieldOrderFormatCustom = [
+    FieldName.LOG_LEVEL,
+    FieldName.TEXT,
+  ];
+  config.formatType = FormatType.FORMAT_CUSTOM;
+  config.customClosingDivider = "[";
+  config.customOpeningDivider = "]";
+
+  FLog.applyConfigurations(config);
+
   ModuleContainer().init(Injector()).then((value) {
     provider = value;
     Settings.init();
     runApp(const MyApp());
   });
-
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +36,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     var supportedLocales = [
       const Locale("en", ""),
       const Locale("de", ""),

@@ -190,6 +190,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.4"
+  f_logs:
+    dependency: "direct main"
+    description:
+      name: f_logs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -714,6 +721,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  sembast:
+    dependency: transitive
+    description:
+      name: sembast
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.1"
   shared_preferences:
     dependency: transitive
     description:
@@ -845,6 +859,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0+3"
   term_glyph:
     dependency: transitive
     description:
@@ -915,6 +936,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.1.0"
+  xxtea:
+    dependency: transitive
+    description:
+      name: xxtea
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0"
   yaml:
     dependency: transitive
     description:
