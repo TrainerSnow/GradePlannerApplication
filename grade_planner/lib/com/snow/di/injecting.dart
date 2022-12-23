@@ -10,6 +10,7 @@ import 'package:grade_planner/com/snow/feature_grades/data/source/subject_databa
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__images_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__preferences_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_download_data_drive.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_upload_current_to_drive.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_image.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_subject.dart';
@@ -100,37 +101,39 @@ class ModuleContainer {
     var updateGrade = UpdateGrade(subject_repo, updateSubject);
 
     injector.map<SubjectUsecases>((injector) => SubjectUsecases(
-      getAllSubjects: getAllSubjects,
-      addSubject: addSubject,
-      deleteSubject: deleteSubject,
-      checkSubjectInputs: checkSubjectsInputs,
-      subjectExists: subjectExists,
-      getSubjectByName: getSubjectByName,
-      checkGradeInputs: checkGradeInputs,
-      updateSubject: updateSubject,
-      checkYearInput: checkYearsInput,
-      addYear: addYear,
-      getYears: getYears,
-      getSubjectsByGoodness: getSubjectsByGoodness,
-      getMeanAverage: getMeanAverage,
-      getRecentGrades: getRecentGrades,
-      getRecentSubjects: getRecentSubjects,
-      deleteGrade: deleteGrade,
-      isOverAverage: isOverAverage,
-      updateGrade: updateGrade,
-    ));
+          getAllSubjects: getAllSubjects,
+          addSubject: addSubject,
+          deleteSubject: deleteSubject,
+          checkSubjectInputs: checkSubjectsInputs,
+          subjectExists: subjectExists,
+          getSubjectByName: getSubjectByName,
+          checkGradeInputs: checkGradeInputs,
+          updateSubject: updateSubject,
+          checkYearInput: checkYearsInput,
+          addYear: addYear,
+          getYears: getYears,
+          getSubjectsByGoodness: getSubjectsByGoodness,
+          getMeanAverage: getMeanAverage,
+          getRecentGrades: getRecentGrades,
+          getRecentSubjects: getRecentSubjects,
+          deleteGrade: deleteGrade,
+          isOverAverage: isOverAverage,
+          updateGrade: updateGrade,
+        ));
 
     var updatePreferences = UpdatePreferences(preferences_repo);
 
-    injector.map<PreferencesUsecases>((injector) => PreferencesUsecases(getPreferences: getPreferences, updatePreferences: updatePreferences));
+    injector.map<PreferencesUsecases>((injector) => PreferencesUsecases(
+        getPreferences: getPreferences, updatePreferences: updatePreferences));
 
     var addImage = AddImage(images_repo);
     var deleteCache = DeleteCache(images_repo);
 
-    var deleteImageByGrade = DeleteImageByGrade(getImagesByGrade, getPreferences);
+    var deleteImageByGrade =
+        DeleteImageByGrade(getImagesByGrade, getPreferences);
 
     injector.map<ImagesUsecases>(
-          (injector) => ImagesUsecases(
+      (injector) => ImagesUsecases(
         addImage: addImage,
         deleteCache: deleteCache,
         getAllImages: getAllImages,
@@ -144,14 +147,16 @@ class ModuleContainer {
     var checkGoogleSignedIn = const CheckGoogleSignedIn();
     var signoutAndRequestGoogleAccount = const SignoutAndRequestGoogleAccount();
     var uploadCurrentToDrive = UploadCurrentToDrive(subjectFile);
+    var downloadFromDrive = DownloadFromDrive(subjectFile);
 
     injector.map<DriveUsecases>((injector) => DriveUsecases(
-      requestGoogleAccount: requestGoogleAccount,
-      checkGoogleSignedIn: checkGoogleSignedIn,
-      requestGoogleAccountSilent: requestGoogleAccountSilent,
-      signoutAndRequestGoogleAccount: signoutAndRequestGoogleAccount,
-      uploadCurrentToDrive: uploadCurrentToDrive,
-    ));
+          requestGoogleAccount: requestGoogleAccount,
+          checkGoogleSignedIn: checkGoogleSignedIn,
+          requestGoogleAccountSilent: requestGoogleAccountSilent,
+          signoutAndRequestGoogleAccount: signoutAndRequestGoogleAccount,
+          uploadCurrentToDrive: uploadCurrentToDrive,
+          downloadFromDrive: downloadFromDrive,
+        ));
 
     return Future.value(injector);
   }

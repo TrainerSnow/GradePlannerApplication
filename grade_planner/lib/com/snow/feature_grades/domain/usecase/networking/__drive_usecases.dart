@@ -1,3 +1,4 @@
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_download_data_drive.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_request_google_account_silent.dart';
 
 import '../local/uc_check_google_signed_in.dart';
@@ -11,6 +12,7 @@ class DriveUsecases {
   RequestGoogleAccountSilent requestGoogleAccountSilent;
   SignoutAndRequestGoogleAccount signoutAndRequestGoogleAccount;
   UploadCurrentToDrive uploadCurrentToDrive;
+  DownloadFromDrive downloadFromDrive;
 
   DriveUsecases({
     required this.checkGoogleSignedIn,
@@ -18,5 +20,6 @@ class DriveUsecases {
     required this.requestGoogleAccountSilent,
     required this.signoutAndRequestGoogleAccount,
     required this.uploadCurrentToDrive,
+    required this.downloadFromDrive,
   });
 }
