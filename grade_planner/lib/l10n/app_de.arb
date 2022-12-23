@@ -57,6 +57,7 @@
   "no_data_available": "[Keine Daten verfügbar]",
   "connect_google_account": "Mit einem Google Konto verknüpfen",
   "upload_current_to_drive": "Aktuelle Daten auf Google Drive hochladen",
+  "download_from_drive": "Aktuelle Daten von Google Drive herunterladen",
   "upload_logs_to_drive": "Entwicklungslogs auf Google Drive hochladen",
   "clear_logs": "Entwicklungslogs löschen",
   "show_logs": "Entwicklungslogs anzeigen",

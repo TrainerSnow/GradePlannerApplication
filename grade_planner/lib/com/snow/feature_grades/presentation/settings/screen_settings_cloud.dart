@@ -16,7 +16,6 @@ class ScreenSettingsDrive extends StatefulWidget {
   State<ScreenSettingsDrive> createState() => _ScreenSettingsDriveState();
 }
 
-//TODO: translate
 class _ScreenSettingsDriveState extends State<ScreenSettingsDrive> {
   late DriveUsecases driveUsecases;
   late Future<GoogleSignInAccount?> account;
@@ -111,7 +110,7 @@ class _ScreenSettingsDriveState extends State<ScreenSettingsDrive> {
                 onTap: _uploadToGoogleDrive,
               ),
               SimpleSettingsTile(
-                title: "Aktuelle Daten von Drive herunterladen",
+                title: AppLocalizations.of(context)!.download_from_drive,
                 onTap: _downloadFromGoogleDrive,
               ),
             ],

@@ -57,6 +57,7 @@
   "no_data_available": "[No data available]",
   "connect_google_account": "Connect a Google Account",
   "upload_current_to_drive": "Upload current data to Google Drive",
+  "download_from_drive": "Download data from Google Drive",
   "upload_logs_to_drive": "Upload logs to Google Drive",
   "clear_logs": "Clear logs",
   "show_logs": "Show logs",
