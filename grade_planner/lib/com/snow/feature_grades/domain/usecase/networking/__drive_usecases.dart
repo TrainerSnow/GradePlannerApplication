@@ -1,8 +1,9 @@
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_request_google_account_silent.dart';
+
 import '../local/uc_check_google_signed_in.dart';
-import '../uc_request_google_account.dart';
-import '../uc_request_google_account_silent.dart';
-import '../uc_signout_and_request_google_account.dart';
-import '../uc_upload_current_to_drive.dart';
+import 'uc_request_google_account.dart';
+import 'uc_signout_and_request_google_account.dart';
+import 'uc_upload_current_to_drive.dart';
 
 class DriveUsecases {
   RequestGoogleAccount requestGoogleAccount;

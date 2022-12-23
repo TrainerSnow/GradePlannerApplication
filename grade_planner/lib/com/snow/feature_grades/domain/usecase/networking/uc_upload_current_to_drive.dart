@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/drive/v3.dart' as google;
 import 'package:sprintf/sprintf.dart';
 
-import '../../data/networking/GoogleAuthClient.dart';
+import '../../../data/networking/GoogleAuthClient.dart';
 
 const FILE_NAME = "grade_data_%s_%s_%s_.json";
 const LOGS_FILENAME = "logs.txt";

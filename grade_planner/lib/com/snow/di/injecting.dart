@@ -10,6 +10,7 @@ import 'package:grade_planner/com/snow/feature_grades/data/source/subject_databa
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__images_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__preferences_usecases.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/local/__subject_usecases.dart';
+import 'package:grade_planner/com/snow/feature_grades/domain/usecase/networking/uc_upload_current_to_drive.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_image.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_add_year.dart';
@@ -32,19 +33,18 @@ import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_subject_
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_grade.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_preferences.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_update_subject.dart';
-import 'package:grade_planner/com/snow/feature_grades/domain/usecase/uc_upload_current_to_drive.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../feature_grades/domain/repository/subject_repository.dart';
 import '../feature_grades/domain/usecase/local/uc_check_google_signed_in.dart';
 import '../feature_grades/domain/usecase/networking/__drive_usecases.dart';
+import '../feature_grades/domain/usecase/networking/uc_request_google_account.dart';
+import '../feature_grades/domain/usecase/networking/uc_request_google_account_silent.dart';
+import '../feature_grades/domain/usecase/networking/uc_signout_and_request_google_account.dart';
 import '../feature_grades/domain/usecase/uc_delete_image_by_grade.dart';
 import '../feature_grades/domain/usecase/uc_get_mean_avg.dart';
 import '../feature_grades/domain/usecase/uc_get_recent_grades.dart';
-import '../feature_grades/domain/usecase/uc_request_google_account.dart';
-import '../feature_grades/domain/usecase/uc_request_google_account_silent.dart';
-import '../feature_grades/domain/usecase/uc_signout_and_request_google_account.dart';
 
 late Logger log;
 
