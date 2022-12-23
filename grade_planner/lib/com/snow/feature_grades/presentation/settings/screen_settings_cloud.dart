@@ -61,6 +61,14 @@ class _ScreenSettingsDriveState extends State<ScreenSettingsDrive> {
     }
   }
 
+  void _downloadFromGoogleDrive() async {
+    final user = await driveUsecases.requestGoogleAccountSilent();
+
+    if (user != null) {
+      driveUsecases.downloadFromDrive(account: user);
+    }
+  }
+
   @override
   void initState() {
     driveUsecases = provider.get<DriveUsecases>();
@@ -101,7 +109,11 @@ class _ScreenSettingsDriveState extends State<ScreenSettingsDrive> {
               SimpleSettingsTile(
                 title: AppLocalizations.of(context)!.upload_current_to_drive,
                 onTap: _uploadToGoogleDrive,
-              )
+              ),
+              SimpleSettingsTile(
+                title: "Aktuelle Daten von Drive herunterladen",
+                onTap: _downloadFromGoogleDrive,
+              ),
             ],
           ),
         ],
