@@ -76,7 +76,7 @@ class _ScreenSettingsDriveState extends State<ScreenSettingsDrive> {
       body: Column(
         children: [
           SettingsGroup(
-            title: "Google Drive",
+            title: AppLocalizations.of(context)!.google_drive,
             children: [
               FutureBuilder<GoogleSignInAccount?>(
                 future: account,
