@@ -19,8 +19,8 @@ void main() async {
     FieldName.TEXT,
   ];
   config.formatType = FormatType.FORMAT_CUSTOM;
-  config.customClosingDivider = "[";
-  config.customOpeningDivider = "]";
+  config.customClosingDivider = "]";
+  config.customOpeningDivider = "[";
 
   FLog.applyConfigurations(config);
 
