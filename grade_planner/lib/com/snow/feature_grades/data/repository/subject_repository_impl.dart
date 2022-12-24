@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:f_logs/model/flog/flog.dart';
 import 'package:grade_planner/com/snow/feature_grades/data/source/subject_database.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/subject.dart';
 import 'package:grade_planner/com/snow/feature_grades/domain/model/year.dart';
@@ -19,8 +18,7 @@ class SubjectRepositoryImpl extends SubjectRepository {
     //All years
     List<Year> years = await getAllYears();
 
-    var currentYear =
-        years.firstWhere((element) => element.name == currentYearName);
+    var currentYear = years.firstWhere((element) => element.name == currentYearName);
     years.remove(currentYear);
 
     currentYear.subjects.add(subject);
@@ -29,10 +27,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
 
     String jsonList = jsonEncode(years);
 
-    FLog.info(text: """
-    Adding Subject: 
-    Will now replace Data in Database
-    """);
     return database.replaceRawData(content: jsonList);
   }
 
@@ -46,6 +40,8 @@ class SubjectRepositoryImpl extends SubjectRepository {
       }
     }
 
+    //years.remove(year);
+
     //Hack
     year.subjects = List.of(year.subjects, growable: true);
 
@@ -55,10 +51,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
 
     String jsonList = jsonEncode(years);
 
-    FLog.info(text: """
-    Adding Subject (with year): 
-    Will now replace Data in Database
-    """);
     return database.replaceRawData(content: jsonList);
   }
 
@@ -98,10 +90,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
 
     String jsonList = jsonEncode(years);
 
-    FLog.info(text: """
-    Remove Subject: 
-    Will now replace Data in Database
-    """);
     return database.replaceRawData(content: jsonList);
   }
 
@@ -117,8 +105,7 @@ class SubjectRepositoryImpl extends SubjectRepository {
       var currentYear = years.firstWhere((element) => element.name == currentYearName);
       years.remove(currentYear);
 
-      currentYear.subjects
-          .removeWhere((element) => element.name == subject.name);
+      currentYear.subjects.removeWhere((element) => element.name == subject.name);
 
       subject.changedAt = DateTime.now().millisecondsSinceEpoch;
       currentYear.subjects.add(subject);
@@ -127,10 +114,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
 
       String jsonList = jsonEncode(years);
 
-      FLog.info(text: """
-      Update Subject: 
-      Will now replace Data in Database
-      """);
       return database.replaceRawData(content: jsonList);
     } else {
       throw ArgumentError("There is currenlty no subject with name '${subject.name}'.");
@@ -144,10 +127,6 @@ class SubjectRepositoryImpl extends SubjectRepository {
 
     String jsonList = jsonEncode(years);
 
-    FLog.info(text: """
-    Adding Year: 
-    Will now replace Data in Database
-    """);
     return database.replaceRawData(content: jsonList);
   }
 
